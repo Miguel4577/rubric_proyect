@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from .config.settings import Config
 from .models import db
 from .middleware.auth_interceptor import auth_middleware
@@ -14,6 +15,12 @@ def create_app():
     app.config.from_object(Config)
 
     db.init_app(app)
+
+    CORS(
+    app,
+    resources={r"/*": {"origins": "*"}},
+    supports_credentials=False
+    )
 
     app.before_request(auth_middleware)
 
