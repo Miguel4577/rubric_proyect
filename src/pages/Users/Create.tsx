@@ -1,5 +1,4 @@
-import React, { useState } from 'react'; // Asegúrate de importar useState
-import { User } from '../../models/User';
+import { CreateUserPayload } from '../../models/User';
 import UserFormValidator from '../../components/users/UserFormValidator';
 
 import Swal from 'sweetalert2';
@@ -10,37 +9,23 @@ import { useNavigate } from "react-router-dom";
 const App = () => {
     const navigate = useNavigate();
 
-    // Estado para almacenar el usuario a editar
-
-    // Lógica de creación
-    const handleCreateUser = async (user: User) => {
-
+    const handleCreateUser = async (user: CreateUserPayload) => {
         try {
-            const createdUser = await userService.createUser(user);
-            if (createdUser) {
-                Swal.fire({
-                    title: "Completado",
-                    text: "Se ha creado correctamente el registro",
-                    icon: "success",
-                    timer: 3000
-                })
-                console.log("Usuario creado con éxito:", createdUser);
-                navigate("/users/list");
-            } else {
-                Swal.fire({
-                    title: "Error",
-                    text: "Existe un problema al momento de crear el registro",
-                    icon: "error",
-                    timer: 3000
-                })
-            }
+            await userService.createUser(user);
+            Swal.fire({
+                title: "Completado",
+                text: "Se ha creado correctamente el registro",
+                icon: "success",
+                timer: 3000
+            });
+            navigate("/users/list");
         } catch (error) {
             Swal.fire({
                 title: "Error",
-                text: "Existe un problema al momento de crear el registro",
+                text: error instanceof Error ? error.message : "Existe un problema al momento de crear el registro",
                 icon: "error",
                 timer: 3000
-            })
+            });
         }
     };
     return (
