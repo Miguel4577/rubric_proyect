@@ -64,3 +64,6 @@ __pypackages__/
 *.pyc
 *.pyo
 *.pyd
+
+#node modules
+/node_modules
