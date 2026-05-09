@@ -196,6 +196,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
               {/* <!-- Menu Item Dashboard --> */}
 
+              <li>
+                <NavLink
+                  to="/academic/careers-semesters"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('academic/careers-semesters') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3.375 2.25C2.754 2.25 2.25 2.754 2.25 3.375V14.625C2.25 15.246 2.754 15.75 3.375 15.75H14.625C15.246 15.75 15.75 15.246 15.75 14.625V3.375C15.75 2.754 15.246 2.25 14.625 2.25H3.375ZM3.75 4.125H14.25V6H3.75V4.125ZM3.75 7.5H8.25V14.25H3.75V7.5ZM9.75 7.5H14.25V14.25H9.75V7.5Z"
+                      fill=""
+                    />
+                  </svg>
+                  Académico
+                </NavLink>
+              </li>
+
               {/* <!-- Menu Item Calendar --> */}
               <li>
                 <NavLink

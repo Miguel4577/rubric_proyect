@@ -8,6 +8,7 @@ const Settings = lazy(() => import('../pages/Settings'));
 const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
+const CareersSemesters = lazy(() => import('../pages/Academic/CareersSemesters'));
 const UserList= lazy(() => import('../pages/Users/ListUsers'));
 const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
@@ -33,6 +34,11 @@ const coreRoutes = [
     path: '/roles-list',
     title: 'Roles',
     component: RoleList,
+  },
+  {
+    path: '/academic/careers-semesters',
+    title: 'Carreras y semestres',
+    component: CareersSemesters,
   },
   {
     path: '/calendar',
