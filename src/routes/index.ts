@@ -1,7 +1,6 @@
 import { lazy } from 'react';
 
 const Calendar = lazy(() => import('../pages/Calendar'));
-const Chart = lazy(() => import('../pages/Chart'));
 const FormElements = lazy(() => import('../pages/Form/FormElements'));
 const FormLayout = lazy(() => import('../pages/Form/FormLayout'));
 const Profile = lazy(() => import('../pages/Profile'));
@@ -9,13 +8,10 @@ const Settings = lazy(() => import('../pages/Settings'));
 const Tables = lazy(() => import('../pages/Tables'));
 const Alerts = lazy(() => import('../pages/UiElements/Alerts'));
 const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
-const Demo= lazy(() => import('../pages/Demo'));
-const ImageEditor= lazy(() => import('../pages/ImageEditor'));
 const UserList= lazy(() => import('../pages/Users/ListUsers'));
 const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
 const RoleList= lazy(() => import('../pages/Roles/List'));
-const Posts= lazy(() => import('../pages/Posts/List'));
 
 const coreRoutes = [
   {
@@ -34,19 +30,9 @@ const coreRoutes = [
     component: UserUpdate,
   },
   {
-    path: '/posts/list',
-    title: 'Posts',
-    component: Posts,
-  },
-  {
     path: '/roles-list',
     title: 'Roles',
     component: RoleList,
-  },
-  {
-    path: '/demo',
-    title: 'Demo',
-    component: Demo,
   },
   {
     path: '/calendar',
@@ -79,11 +65,6 @@ const coreRoutes = [
     component: Settings,
   },
   {
-    path: '/chart',
-    title: 'Chart',
-    component: Chart,
-  },
-  {
     path: '/ui/alerts',
     title: 'Alerts',
     component: Alerts,
@@ -93,11 +74,7 @@ const coreRoutes = [
     title: 'Buttons',
     component: Buttons,
   },
-  {
-    path: '/image-editor',
-    title: 'Image Editor',
-    component: ImageEditor,
-  }
+  
 ];
 
 const routes = [...coreRoutes];

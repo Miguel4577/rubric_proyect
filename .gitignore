@@ -52,9 +52,6 @@ Thumbs.db
 # PEP 582; used by some Python packaging tools
 __pypackages__/
 
-# Env files
-.env
-*.env
 
 # Logs and databases
 *.log

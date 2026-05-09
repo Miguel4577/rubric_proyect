@@ -1,7 +1,8 @@
 import axios from "axios";
 import { User } from "../models/User";
 
-const API_URL = import.meta.env.VITE_API_URL + "/users" || "";
+
+const API_URL = `${import.meta.env.VITE_API_URL ?? ""}/users`;
 
 class UserService {
     async getUsers(): Promise<User[]> {

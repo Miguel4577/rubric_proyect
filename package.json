@@ -16,7 +16,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "apexcharts": "^3.41.0",
-    "axios": "^1.13.6",
+    "axios": "^1.16.0",
     "formik": "^2.4.9",
     "headlessui": "^0.0.0",
     "jsvectormap": "^1.5.3",
