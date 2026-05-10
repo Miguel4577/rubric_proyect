@@ -267,6 +267,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             Gestionar Plan de Estudios
                           </NavLink>
                         </li>
+                        <li>
+                          <NavLink
+                            to="/academic/subjects"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Gestionar Asignaturas
+                          </NavLink>
+                        </li>
                       </ul>
                     </div>
                   </React.Fragment>

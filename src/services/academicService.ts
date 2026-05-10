@@ -128,6 +128,55 @@ class AcademicService {
         }
     }
 
+    async getSubjectById(id: string): Promise<Subject> {
+        try {
+            const response = await api.get<ApiResponse<Subject>>(`${API_URL}/subjects/${id}`);
+            return unwrapResponse<Subject>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async createSubject(payload: SubjectPayload): Promise<Subject> {
+        try {
+            const response = await api.post<ApiResponse<Subject>>(`${API_URL}/subjects`, payload);
+            return unwrapResponse<Subject>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async updateSubject(id: string, payload: SubjectPayload): Promise<Subject> {
+        try {
+            const response = await api.put<ApiResponse<Subject>>(`${API_URL}/subjects/${id}`, payload);
+            return unwrapResponse<Subject>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async archiveSubject(id: string): Promise<Subject> {
+        try {
+            const response = await api.put<ApiResponse<Subject>>(`${API_URL}/subjects/${id}`, {
+                is_active: false,
+            });
+            return unwrapResponse<Subject>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async reactivateSubject(id: string): Promise<Subject> {
+        try {
+            const response = await api.put<ApiResponse<Subject>>(`${API_URL}/subjects/${id}`, {
+                is_active: true,
+            });
+            return unwrapResponse<Subject>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
     async getStudyPlanVersions(careerId: string): Promise<StudyPlanVersion[]> {
         try {
             const response = await api.get<ApiResponse<StudyPlanVersion[]>>(`${API_URL}/study-plans`);
