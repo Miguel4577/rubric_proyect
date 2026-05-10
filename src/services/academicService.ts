@@ -5,6 +5,10 @@ import {
     CareerPayload,
     Semester,
     SemesterPayload,
+    Subject,
+    SubjectPayload,
+    StudyPlanVersion,
+    StudyPlanVersionPayload,
 } from "../models/Academic";
 
 interface ApiResponse<T> {
@@ -110,6 +114,61 @@ class AcademicService {
         try {
             const response = await api.put<ApiResponse<Semester>>(`${API_URL}/semesters/${id}`, payload);
             return unwrapResponse<Semester>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async getSubjects(): Promise<Subject[]> {
+        try {
+            const response = await api.get<ApiResponse<Subject[]>>(`${API_URL}/subjects`);
+            return unwrapResponse<Subject[]>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async getStudyPlanVersions(careerId: string): Promise<StudyPlanVersion[]> {
+        try {
+            const response = await api.get<ApiResponse<StudyPlanVersion[]>>(`${API_URL}/study-plans`);
+            const allPlans = unwrapResponse<StudyPlanVersion[]>(response.data);
+            return allPlans.filter((plan) => plan.career_id === careerId);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async addStudyPlanSubject(payload: StudyPlanVersionPayload): Promise<StudyPlanVersion> {
+        try {
+            const response = await api.post<ApiResponse<StudyPlanVersion>>(`${API_URL}/study-plans`, payload);
+            return unwrapResponse<StudyPlanVersion>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async createStudyPlanVersion(payload: StudyPlanVersionPayload): Promise<StudyPlanVersion> {
+        try {
+            const response = await api.post<ApiResponse<StudyPlanVersion>>(`${API_URL}/study-plans`, payload);
+            return unwrapResponse<StudyPlanVersion>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async getStudyPlanVersionHistory(careerId: string): Promise<StudyPlanVersion[]> {
+        try {
+            const response = await api.get<ApiResponse<StudyPlanVersion[]>>(`${API_URL}/study-plans`);
+            const allPlans = unwrapResponse<StudyPlanVersion[]>(response.data);
+            return allPlans.filter((plan) => plan.career_id === careerId);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async deleteStudyPlanSubject(id: string): Promise<void> {
+        try {
+            await api.delete(`${API_URL}/study-plans/${id}`);
         } catch (error) {
             throw new Error(getErrorMessage(error));
         }
