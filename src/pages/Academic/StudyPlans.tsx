@@ -107,16 +107,6 @@ const StudyPlans = () => {
             credits: "0",
         };
     };
-
-    const getSubjectInfo = (subjectId: string): { code: string; name: string; credits: string } => {
-        const subject = subjects.find((s) => s.id === subjectId);
-        return {
-            code: subject?.code || "Desconocido",
-            name: subject?.name || "Desconocida",
-            credits: subject?.credits ? subject.credits.toString() : "0",
-        };
-    };
-
     const deleteStudyPlanSubject = async (planId: string) => {
         const confirmed = await Swal.fire({
             icon: "question",
