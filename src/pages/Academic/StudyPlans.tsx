@@ -87,6 +87,36 @@ const StudyPlans = () => {
         setSelectedSubjects(selectedSubjects.filter((_, i) => i !== index));
     };
 
+    const getSubjectInfoFromName = (name: string): { code: string; name: string; credits: string } => {
+        // El nombre viene como "NombreAsignatura - Semestre X"
+        const parts = name.split(" - Semestre");
+        if (parts.length > 0) {
+            const subjectName = parts[0].trim();
+            const subject = subjects.find((s) => s.name === subjectName);
+            if (subject) {
+                return {
+                    code: subject.code || "Desconocido",
+                    name: subject.name || "Desconocida",
+                    credits: subject.credits ? subject.credits.toString() : "0",
+                };
+            }
+        }
+        return {
+            code: "Desconocido",
+            name: "Desconocida",
+            credits: "0",
+        };
+    };
+
+    const getSubjectInfo = (subjectId: string): { code: string; name: string; credits: string } => {
+        const subject = subjects.find((s) => s.id === subjectId);
+        return {
+            code: subject?.code || "Desconocido",
+            name: subject?.name || "Desconocida",
+            credits: subject?.credits ? subject.credits.toString() : "0",
+        };
+    };
+
     const deleteStudyPlanSubject = async (planId: string) => {
         const confirmed = await Swal.fire({
             icon: "question",
@@ -129,12 +159,14 @@ const StudyPlans = () => {
 
         try {
             let successCount = 0;
+            const currentYear = new Date().getFullYear();
             for (const item of selectedSubjects) {
                 const payload: StudyPlanVersionPayload = {
                     career_id: selectedCareer,
                     subject_id: item.subject.id || "",
                     suggested_semester: item.suggested_semester,
                     name: `${item.subject.name} - Semestre ${item.suggested_semester}`,
+                    year: currentYear,
                 };
                 await academicService.addStudyPlanSubject(payload);
                 successCount++;
@@ -277,16 +309,26 @@ const StudyPlans = () => {
                             <div>
                                 <h3 className="mb-3 text-lg font-semibold text-gray-800">Asignaturas en el Plan</h3>
                                 <GenericTable
-                                    data={studyPlanItems.map((item) => ({
-                                        id: item.id || "",
-                                        code: item.subject?.code || "",
-                                        name: item.subject?.name || "",
-                                        credits: (item.subject?.credits || 0).toString(),
-                                        semester: (item.suggested_semester || 0).toString(),
-                                        created: item.created_at?.substring(0, 10) || "",
-                                    }))}
+                                    data={studyPlanItems.map((item) => {
+                                        const subjectInfo = getSubjectInfoFromName(item.name || "");
+                                        return {
+                                            id: item.id || "",
+                                            code: subjectInfo.code,
+                                            name: subjectInfo.name,
+                                            credits: subjectInfo.credits,
+                                            semester: (item.suggested_semester || 0).toString(),
+                                            created: item.created_at?.substring(0, 10) || "",
+                                        };
+                                    })}
                                     columns={["code", "name", "credits", "semester", "created"]}
                                     actions={[{ name: "delete", label: "Eliminar" }]}
+                                    columnHeaders={{
+                                        code: "Código",
+                                        name: "Nombre",
+                                        credits: "Créditos",
+                                        semester: "Semestre",
+                                        created: "Creado",
+                                    }}
                                     onAction={(action, item) => {
                                         if (action === "delete") {
                                             void deleteStudyPlanSubject(item.id as string);

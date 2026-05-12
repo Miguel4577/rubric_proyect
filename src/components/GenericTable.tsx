@@ -10,9 +10,16 @@ interface GenericTableProps {
     columns: string[];
     actions: Action[];
     onAction: (name: string, item: Record<string, any>) => void;
+    columnHeaders?: Record<string, string>;
 }
 
-const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onAction }) => {
+const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onAction, columnHeaders }) => {
+    const getHeaderLabel = (col: string): string => {
+        if (columnHeaders && columnHeaders[col]) {
+            return columnHeaders[col];
+        }
+        return col.charAt(0).toUpperCase() + col.slice(1);
+    };
     return (
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="max-w-full overflow-x-auto">
@@ -26,7 +33,7 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
                                         index === 0 ? "min-w-[220px] xl:pl-11" : "min-w-[150px]"
                                     }`}
                                 >
-                                    {col}
+                                    {getHeaderLabel(col)}
                                 </th>
                             ))}
                             <th className="py-4 px-4 font-medium text-black dark:text-white">

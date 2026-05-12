@@ -62,21 +62,22 @@ export interface StudyPlanSubject {
 export interface StudyPlanVersion {
     id?: string;
     career_id: string;
-    subject_id: string;
+    subject_id?: string;
     name?: string;
     year?: number;
     suggested_semester?: number;
     is_published?: boolean;
     subject?: Subject;
+    subjects?: Subject[];
     created_at?: string;
     updated_at?: string;
 }
 
 export interface StudyPlanVersionPayload {
     career_id: string;
-    subject_id: string;
+    subject_id?: string;
     name?: string;
-    year?: number;
+    year: number;
     suggested_semester: number;
     is_published?: boolean;
 }
@@ -165,4 +166,151 @@ export interface RegistrationRow {
     admissionPeriod: string;
     academicStatus: string;
     status: string;
+}
+
+// ===== Enrollment (HU-07) =====
+export interface Enrollment {
+    id?: string;
+    student_id: string;
+    group_id: string;
+    enrollment_date?: string;
+    status?: string;
+    student?: Student;
+    group?: Group;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface EnrollmentPayload {
+    student_id: string;
+    group_id: string;
+    status?: string;
+}
+
+export interface EnrollmentRow {
+    id: string;
+    studentName: string;
+    groupName: string;
+    subject: string;
+    semester: string;
+    status: string;
+}
+
+// ===== Rubric System (HU-08 to HU-12) =====
+export interface Rubric {
+    id?: string;
+    title: string;
+    description?: string;
+    is_public?: boolean;
+    is_archived?: boolean;
+    criteria?: Criterion[];
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface RubricPayload {
+    title: string;
+    description?: string;
+    is_public?: boolean;
+}
+
+export interface Criterion {
+    id?: string;
+    rubric_id: string;
+    name: string;
+    description?: string;
+    weight: number;
+    scales?: Scale[];
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface CriterionPayload {
+    rubric_id: string;
+    name: string;
+    description?: string;
+    weight: number;
+}
+
+export interface Scale {
+    id?: string;
+    criterion_id: string;
+    name: string;
+    description?: string;
+    value: number;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface ScalePayload {
+    criterion_id: string;
+    name: string;
+    description?: string;
+    value: number;
+}
+
+export interface Evaluation {
+    id?: string;
+    subject_id: string;
+    rubric_id?: string;
+    group_id: string;
+    name: string;
+    description?: string;
+    weight: number;
+    subject?: Subject;
+    rubric?: Rubric;
+    group?: Group;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface EvaluationPayload {
+    subject_id: string;
+    group_id: string;
+    name: string;
+    description?: string;
+    weight: number;
+    rubric_id?: string;
+}
+
+export interface Grade {
+    id?: string;
+    enrollment_id: string;
+    rubric_id: string;
+    final_score: number;
+    status: string;
+    observations?: string;
+    is_locked?: boolean;
+    enrollment?: Enrollment;
+    rubric?: Rubric;
+    grade_details?: GradeDetail[];
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface GradePayload {
+    enrollment_id: string;
+    rubric_id: string;
+    final_score: number;
+    status?: string;
+    observations?: string;
+}
+
+export interface GradeDetail {
+    id?: string;
+    scale_id: string;
+    student_id: string;
+    score: number;
+    comment?: string;
+    scale?: Scale;
+    student?: Student;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface GradeDetailPayload {
+    scale_id: string;
+    student_id: string;
+    score: number;
+    comment?: string;
 }

@@ -7,6 +7,8 @@ import {
     GroupPayload,
     Registration,
     RegistrationPayload,
+    Enrollment,
+    EnrollmentPayload,
 } from "../models/Academic";
 
 interface ApiResponse<T> {
@@ -171,6 +173,54 @@ class ManagementService {
                 is_active: false,
             });
             return unwrapResponse<Registration>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    // ============ ENROLLMENTS (HU-07) ============
+    async getEnrollments(): Promise<Enrollment[]> {
+        try {
+            const response = await api.get<ApiResponse<Enrollment[]>>(`${API_URL}/enrollments`);
+            return unwrapResponse<Enrollment[]>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async getEnrollmentById(id: string): Promise<Enrollment> {
+        try {
+            const response = await api.get<ApiResponse<Enrollment>>(`${API_URL}/enrollments/${id}`);
+            return unwrapResponse<Enrollment>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async createEnrollment(payload: EnrollmentPayload): Promise<Enrollment> {
+        try {
+            const response = await api.post<ApiResponse<Enrollment>>(`${API_URL}/enrollments`, payload);
+            return unwrapResponse<Enrollment>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async updateEnrollment(id: string, payload: Partial<EnrollmentPayload>): Promise<Enrollment> {
+        try {
+            const response = await api.put<ApiResponse<Enrollment>>(`${API_URL}/enrollments/${id}`, payload);
+            return unwrapResponse<Enrollment>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async cancelEnrollment(id: string): Promise<Enrollment> {
+        try {
+            const response = await api.put<ApiResponse<Enrollment>>(`${API_URL}/enrollments/${id}`, {
+                status: "CANCELLED",
+            });
+            return unwrapResponse<Enrollment>(response.data);
         } catch (error) {
             throw new Error(getErrorMessage(error));
         }
