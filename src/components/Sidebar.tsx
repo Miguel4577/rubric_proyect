@@ -278,6 +278,62 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             Gestionar Asignaturas
                           </NavLink>
                         </li>
+                      </ul>
+                    </div>
+                  </React.Fragment>
+                )}
+              </SidebarLinkGroup>
+
+              {/* <!-- Menu Item Gestión --> */}
+              <SidebarLinkGroup
+                activeCondition={pathname.includes('assign-teacher') || pathname.includes('groups') || pathname.includes('student-registration')}
+              >
+                {(handleClick, open) => (
+                  <React.Fragment>
+                    <NavLink
+                      to="#"
+                      className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        (pathname.includes('assign-teacher') || pathname.includes('groups') || pathname.includes('student-registration')) && 'bg-graydark dark:bg-meta-4'
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                      }}
+                    >
+                      <svg
+                        className="fill-current"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 1.5C4.8 1.5 1.5 4.8 1.5 9C1.5 13.2 4.8 16.5 9 16.5C13.2 16.5 16.5 13.2 16.5 9C16.5 4.8 13.2 1.5 9 1.5ZM9 3C10.35 3 11.475 4.125 11.475 5.475C11.475 6.825 10.35 7.95 9 7.95C7.65 7.95 6.525 6.825 6.525 5.475C6.525 4.125 7.65 3 9 3ZM9 15C7.35 15 5.85 14.25 4.8 13.05C4.95 11.7 7.05 10.95 9 10.95C10.95 10.95 13.05 11.7 13.2 13.05C12.15 14.25 10.65 15 9 15Z"
+                          fill=""
+                        />
+                      </svg>
+                      Gestión
+                      <svg
+                        className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
+                          open && 'rotate-180'
+                        }`}
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z"
+                          fill=""
+                        />
+                      </svg>
+                    </NavLink>
+                    <div className={`translate transform overflow-hidden ${!open && 'hidden'}`}>
+                      <ul className="mt-4 mb-5.5 flex flex-col gap-2.5 pl-6">
                         <li>
                           <NavLink
                             to="/academic/assign-teacher"
@@ -298,6 +354,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             }
                           >
                             Gestionar Grupos
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/academic/student-registration"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Matricular Estudiantes
                           </NavLink>
                         </li>
                       </ul>

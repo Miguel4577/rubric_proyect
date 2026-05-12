@@ -4,6 +4,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import GenericTable from "../../components/GenericTable";
 import { Semester, Group, Teacher, GroupRow } from "../../models/Academic";
 import { academicService } from "../../services/academicService";
+import { managementService } from "../../services/managementService";
 
 const AssignTeacherToGroup = () => {
     const [semesters, setSemesters] = useState<Semester[]>([]);
@@ -18,8 +19,8 @@ const AssignTeacherToGroup = () => {
         try {
             const [semesterItems, teacherItems, groupItems] = await Promise.all([
                 academicService.getSemesters(),
-                academicService.getTeachers(),
-                academicService.getGroups(),
+                managementService.getTeachers(),
+                managementService.getGroups(),
             ]);
             setSemesters(semesterItems);
             setTeachers(teacherItems);
@@ -106,7 +107,7 @@ const AssignTeacherToGroup = () => {
             if (result.isConfirmed && result.value) {
                 try {
                     setReassigningGroupId(groupId);
-                    await academicService.assignTeacherToGroup(groupId, result.value);
+                    await managementService.assignTeacherToGroup(groupId, result.value);
                     Swal.fire({
                         icon: "success",
                         title: "Éxito",

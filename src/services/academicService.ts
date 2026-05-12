@@ -9,9 +9,6 @@ import {
     SubjectPayload,
     StudyPlanVersion,
     StudyPlanVersionPayload,
-    Teacher,
-    Group,
-    GroupPayload,
 } from "../models/Academic";
 
 interface ApiResponse<T> {
@@ -221,79 +218,6 @@ class AcademicService {
     async deleteStudyPlanSubject(id: string): Promise<void> {
         try {
             await api.delete(`${API_URL}/study-plans/${id}`);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async getTeachers(): Promise<Teacher[]> {
-        try {
-            const response = await api.get<ApiResponse<Teacher[]>>(`${API_URL}/teachers`);
-            return unwrapResponse<Teacher[]>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async getTeacherById(id: string): Promise<Teacher> {
-        try {
-            const response = await api.get<ApiResponse<Teacher>>(`${API_URL}/teachers/${id}`);
-            return unwrapResponse<Teacher>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async getGroups(): Promise<Group[]> {
-        try {
-            const response = await api.get<ApiResponse<Group[]>>(`${API_URL}/groups`);
-            return unwrapResponse<Group[]>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async getGroupById(id: string): Promise<Group> {
-        try {
-            const response = await api.get<ApiResponse<Group>>(`${API_URL}/groups/${id}`);
-            return unwrapResponse<Group>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async createGroup(payload: GroupPayload): Promise<Group> {
-        try {
-            const response = await api.post<ApiResponse<Group>>(`${API_URL}/groups`, payload);
-            return unwrapResponse<Group>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async updateGroup(id: string, payload: Partial<GroupPayload>): Promise<Group> {
-        try {
-            const response = await api.put<ApiResponse<Group>>(`${API_URL}/groups/${id}`, payload);
-            return unwrapResponse<Group>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async assignTeacherToGroup(groupId: string, teacherId: string): Promise<Group> {
-        try {
-            const response = await api.patch<ApiResponse<Group>>(
-                `${API_URL}/groups/${groupId}/assign-teacher/${teacherId}`
-            );
-            return unwrapResponse<Group>(response.data);
-        } catch (error) {
-            throw new Error(getErrorMessage(error));
-        }
-    }
-
-    async deleteGroup(id: string): Promise<void> {
-        try {
-            await api.delete(`${API_URL}/groups/${id}`);
         } catch (error) {
             throw new Error(getErrorMessage(error));
         }

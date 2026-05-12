@@ -126,3 +126,43 @@ export interface GroupRow {
     teacher: string;
     capacity: string;
 }
+
+export interface Student {
+    id?: string;
+    user_id: string;
+    first_name: string;
+    last_name: string;
+    identification: string;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface Registration {
+    id?: string;
+    student_id: string;
+    career_id: string;
+    admission_period: string;
+    academic_status: string;
+    is_active?: boolean;
+    student?: Student;
+    career?: Career;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface RegistrationPayload {
+    student_id: string;
+    career_id: string;
+    admission_period: string;
+    academic_status: string;
+    is_active?: boolean;
+}
+
+export interface RegistrationRow {
+    id: string;
+    studentName: string;
+    careerName: string;
+    admissionPeriod: string;
+    academicStatus: string;
+    status: string;
+}

@@ -4,6 +4,7 @@ import Breadcrumb from "../../components/Breadcrumb";
 import GenericTable from "../../components/GenericTable";
 import { Semester, Group, GroupRow, Subject, Teacher, GroupPayload } from "../../models/Academic";
 import { academicService } from "../../services/academicService";
+import { managementService } from "../../services/managementService";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
@@ -31,10 +32,10 @@ const Groups = () => {
         setLoading(true);
         try {
             const [groupItems, semesterItems, subjectItems, teacherItems] = await Promise.all([
-                academicService.getGroups(),
+                managementService.getGroups(),
                 academicService.getSemesters(),
                 academicService.getSubjects(),
-                academicService.getTeachers(),
+                managementService.getTeachers(),
             ]);
             setGroups(groupItems);
             setSemesters(semesterItems);
@@ -110,14 +111,14 @@ const Groups = () => {
             }
 
             if (editingId) {
-                await academicService.updateGroup(editingId, values);
+                await managementService.updateGroup(editingId, values);
                 Swal.fire({
                     icon: "success",
                     title: "Éxito",
                     text: "Grupo actualizado correctamente",
                 });
             } else {
-                await academicService.createGroup(values);
+                await managementService.createGroup(values);
                 Swal.fire({
                     icon: "success",
                     title: "Éxito",
@@ -157,7 +158,7 @@ const Groups = () => {
         if (!confirmed.isConfirmed) return;
 
         try {
-            await academicService.deleteGroup(id);
+            await managementService.deleteGroup(id);
             Swal.fire({
                 icon: "success",
                 title: "Éxito",
