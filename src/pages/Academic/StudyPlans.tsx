@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Breadcrumb from "../../components/Breadcrumb";
+import GenericTable from "../../components/GenericTable";
 import { Career, StudyPlanVersion, Subject, StudyPlanVersionPayload } from "../../models/Academic";
 import { academicService } from "../../services/academicService";
 
@@ -275,39 +276,23 @@ const StudyPlans = () => {
                         {studyPlanItems.length > 0 && (
                             <div>
                                 <h3 className="mb-3 text-lg font-semibold text-gray-800">Asignaturas en el Plan</h3>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-sm">
-                                        <thead className="border-b bg-gray-100">
-                                            <tr>
-                                                <th className="px-4 py-2 text-left">Código</th>
-                                                <th className="px-4 py-2 text-left">Asignatura</th>
-                                                <th className="px-4 py-2 text-left">Créditos</th>
-                                                <th className="px-4 py-2 text-left">Semestre Sugerido</th>
-                                                <th className="px-4 py-2 text-left">Creado</th>
-                                                <th className="px-4 py-2 text-center">Acciones</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {studyPlanItems.map((item) => (
-                                                <tr key={item.id} className="border-b hover:bg-gray-50">
-                                                    <td className="px-4 py-2">{item.subject?.code || ""}</td>
-                                                    <td className="px-4 py-2">{item.subject?.name || ""}</td>
-                                                    <td className="px-4 py-2">{item.subject?.credits || 0}</td>
-                                                    <td className="px-4 py-2">{item.suggested_semester}</td>
-                                                    <td className="px-4 py-2">{item.created_at?.substring(0, 10) || ""}</td>
-                                                    <td className="px-4 py-2 text-center">
-                                                        <button
-                                                            onClick={() => deleteStudyPlanSubject(item.id || "")}
-                                                            className="text-red-600 hover:text-red-800"
-                                                        >
-                                                            Eliminar
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <GenericTable
+                                    data={studyPlanItems.map((item) => ({
+                                        id: item.id || "",
+                                        code: item.subject?.code || "",
+                                        name: item.subject?.name || "",
+                                        credits: (item.subject?.credits || 0).toString(),
+                                        semester: (item.suggested_semester || 0).toString(),
+                                        created: item.created_at?.substring(0, 10) || "",
+                                    }))}
+                                    columns={["code", "name", "credits", "semester", "created"]}
+                                    actions={[{ name: "delete", label: "Eliminar" }]}
+                                    onAction={(action, item) => {
+                                        if (action === "delete") {
+                                            void deleteStudyPlanSubject(item.id as string);
+                                        }
+                                    }}
+                                />
                             </div>
                         )}
                     </>

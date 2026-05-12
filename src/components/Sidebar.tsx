@@ -278,6 +278,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             Gestionar Asignaturas
                           </NavLink>
                         </li>
+                        <li>
+                          <NavLink
+                            to="/academic/assign-teacher"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Asignar Docentes
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/academic/groups"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Gestionar Grupos
+                          </NavLink>
+                        </li>
                       </ul>
                     </div>
                   </React.Fragment>

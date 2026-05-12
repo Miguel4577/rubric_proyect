@@ -80,3 +80,49 @@ export interface StudyPlanVersionPayload {
     suggested_semester: number;
     is_published?: boolean;
 }
+
+export interface Teacher {
+    id?: string;
+    user_id: string;
+    first_name: string;
+    last_name: string;
+    phone?: string;
+    identification: string;
+    specialty?: string;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface Group {
+    id?: string;
+    teacher_id: string;
+    subject_id: string;
+    semester_id: string;
+    name: string;
+    group_code: string;
+    capacity?: number;
+    subject?: Subject;
+    semester?: Semester;
+    teacher?: Teacher;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface GroupPayload {
+    teacher_id: string;
+    subject_id: string;
+    semester_id: string;
+    name: string;
+    group_code: string;
+    capacity?: number;
+}
+
+export interface GroupRow {
+    id: string;
+    groupCode: string;
+    name: string;
+    subject: string;
+    semester: string;
+    teacher: string;
+    capacity: string;
+}

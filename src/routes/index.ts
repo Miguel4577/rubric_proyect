@@ -11,6 +11,8 @@ const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
 const CareersSemesters = lazy(() => import('../pages/Academic/CareersSemesters'));
 const StudyPlans = lazy(() => import('../pages/Academic/StudyPlans'));
 const Subjects = lazy(() => import('../pages/Academic/Subjects'));
+const AssignTeacherToGroup = lazy(() => import('../pages/Academic/AssignTeacherToGroup'));
+const Groups = lazy(() => import('../pages/Academic/Groups'));
 const UserList= lazy(() => import('../pages/Users/ListUsers'));
 const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
@@ -51,6 +53,16 @@ const coreRoutes = [
     path: '/academic/subjects',
     title: 'Gestionar Asignaturas',
     component: Subjects,
+  },
+  {
+    path: '/academic/assign-teacher',
+    title: 'Asignar Docentes',
+    component: AssignTeacherToGroup,
+  },
+  {
+    path: '/academic/groups',
+    title: 'Gestionar Grupos',
+    component: Groups,
   },
   {
     path: '/calendar',

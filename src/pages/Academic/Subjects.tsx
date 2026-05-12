@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Breadcrumb from "../../components/Breadcrumb";
+import GenericTable from "../../components/GenericTable";
 import { Subject, SubjectPayload } from "../../models/Academic";
 import { academicService } from "../../services/academicService";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -278,68 +279,34 @@ const Subjects = () => {
                 {subjects.length === 0 ? (
                     <p className="text-gray-500">No hay asignaturas registradas</p>
                 ) : (
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-sm">
-                            <thead className="border-b bg-gray-100">
-                                <tr>
-                                    <th className="px-4 py-2 text-left">Código</th>
-                                    <th className="px-4 py-2 text-left">Nombre</th>
-                                    <th className="px-4 py-2 text-center">Créditos</th>
-                                    <th className="px-4 py-2 text-left">Descripción</th>
-                                    <th className="px-4 py-2 text-center">Estado</th>
-                                    <th className="px-4 py-2 text-center">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {subjects.map((subject) => (
-                                    <tr key={subject.id} className="border-b hover:bg-gray-50">
-                                        <td className="px-4 py-2 font-semibold">{subject.code}</td>
-                                        <td className="px-4 py-2">{subject.name}</td>
-                                        <td className="px-4 py-2 text-center">{subject.credits}</td>
-                                        <td className="px-4 py-2 text-gray-600">{subject.description || "-"}</td>
-                                        <td className="px-4 py-2 text-center">
-                                            <span
-                                                className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                                                    subject.is_active !== false
-                                                        ? "bg-green-100 text-green-800"
-                                                        : "bg-red-100 text-red-800"
-                                                }`}
-                                            >
-                                                {subject.is_active !== false ? "Activa" : "Archivada"}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-2 text-center">
-                                            <div className="flex justify-center gap-2">
-                                                {subject.is_active !== false ? (
-                                                    <>
-                                                        <button
-                                                            onClick={() => handleEdit(subject)}
-                                                            className="text-blue-600 hover:text-blue-800"
-                                                        >
-                                                            Editar
-                                                        </button>
-                                                        <button
-                                                            onClick={() => handleArchive(subject.id || "")}
-                                                            className="text-yellow-600 hover:text-yellow-800"
-                                                        >
-                                                            Archivar
-                                                        </button>
-                                                    </>
-                                                ) : (
-                                                    <button
-                                                        onClick={() => handleReactivate(subject.id || "")}
-                                                        className="text-green-600 hover:text-green-800"
-                                                    >
-                                                        Reactivar
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                    <GenericTable
+                        data={subjects.map((subject) => ({
+                            id: subject.id || "",
+                            code: subject.code,
+                            name: subject.name,
+                            credits: subject.credits.toString(),
+                            description: subject.description || "-",
+                            status: subject.is_active !== false ? "Activa" : "Archivada",
+                            is_active: subject.is_active,
+                        }))}
+                        columns={["code", "name", "credits", "description", "status"]}
+                        actions={[
+                            { name: "edit", label: "Editar" },
+                            { name: "archive", label: "Archivar/Reactivar" },
+                        ]}
+                        onAction={(action, item) => {
+                            if (action === "edit") {
+                                handleEdit(subjects.find((s) => s.id === item.id) || ({} as Subject));
+                            } else if (action === "archive") {
+                                const subject = subjects.find((s) => s.id === item.id);
+                                if (subject?.is_active !== false) {
+                                    void handleArchive(item.id as string);
+                                } else {
+                                    void handleReactivate(item.id as string);
+                                }
+                            }
+                        }}
+                    />
                 )}
             </div>
         </div>
