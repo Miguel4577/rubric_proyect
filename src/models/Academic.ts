@@ -82,6 +82,59 @@ export interface StudyPlanVersionPayload {
     is_published?: boolean;
 }
 
+export interface Rubric {
+    id?: string;
+    subject_id: string;
+    title: string;
+    description?: string;
+    is_public?: boolean;
+    is_archived?: boolean;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface RubricPayload {
+    subject_id: string;
+    title: string;
+    description?: string;
+    is_public?: boolean;
+    is_archived?: boolean;
+}
+
+export interface Criterion {
+    id?: string;
+    rubric_id: string;
+    name: string;
+    description?: string;
+    weight: number;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface CriterionPayload {
+    rubric_id: string;
+    name: string;
+    description?: string;
+    weight: number;
+}
+
+export interface Scale {
+    id?: string;
+    criterion_id: string;
+    name: string;
+    description?: string;
+    value: number;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface ScalePayload {
+    criterion_id: string;
+    name: string;
+    description?: string;
+    value: number;
+}
+
 export interface Teacher {
     id?: string;
     user_id: string;
