@@ -11,10 +11,11 @@ const Buttons = lazy(() => import('../pages/UiElements/Buttons'));
 const CareersSemesters = lazy(() => import('../pages/Academic/CareersSemesters'));
 const StudyPlans = lazy(() => import('../pages/Academic/StudyPlans'));
 const Subjects = lazy(() => import('../pages/Academic/Subjects'));
+const Scales = lazy(() => import('../pages/Academic/Rubrics/Scales/Scales'));
 const AssignTeacherToGroup = lazy(() => import('../pages/Academic/AssignTeacherToGroup'));
 const Groups = lazy(() => import('../pages/Academic/Groups'));
 const StudentRegistration = lazy(() => import('../pages/Academic/StudentRegistration'));
-const StudentEnrollment = lazy(() => import('../pages/Academic/StudentEnrollment'));
+const Rubrics = lazy(() => import('../pages/Academic/Rubrics/Rubrics'));
 const UserList= lazy(() => import('../pages/Users/ListUsers'));
 const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
@@ -57,6 +58,16 @@ const coreRoutes = [
     component: Subjects,
   },
   {
+    path: '/academic/scales',
+    title: 'Definir Criterios y Escalas',
+    component: Scales,
+  },
+  {
+    path: '/academic/rubrics',
+    title: 'Gestionar Rúbricas',
+    component: Rubrics,
+  },
+  {
     path: '/academic/assign-teacher',
     title: 'Asignar Docentes',
     component: AssignTeacherToGroup,
@@ -70,11 +81,6 @@ const coreRoutes = [
     path: '/academic/student-registration',
     title: 'Matricular Estudiantes',
     component: StudentRegistration,
-  },
-  {
-    path: '/academic/student-enrollment',
-    title: 'Inscribir Estudiante en Grupo',
-    component: StudentEnrollment,
   },
   {
     path: '/calendar',
