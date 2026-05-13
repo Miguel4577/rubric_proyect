@@ -286,14 +286,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               {/* <!-- Menu Item Gestión --> */}
               <SidebarLinkGroup
-                activeCondition={pathname.includes('users') || pathname.includes('assign-teacher') || pathname.includes('groups') || pathname.includes('student-registration')}
+                activeCondition={pathname.includes('users/list') || pathname.includes('assign-teacher') || pathname.includes('groups') || pathname.includes('student-registration') || pathname.includes('student-enrollment')}
               >
                 {(handleClick, open) => (
                   <React.Fragment>
                     <NavLink
                       to="#"
                       className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        (pathname.includes('users') || pathname.includes('assign-teacher') || pathname.includes('groups') || pathname.includes('student-registration')) && 'bg-graydark dark:bg-meta-4'
+                        (pathname.includes('users/list') || pathname.includes('assign-teacher') || pathname.includes('groups') || pathname.includes('student-registration') || pathname.includes('student-enrollment')) && 'bg-graydark dark:bg-meta-4'
                       }`}
                       onClick={(e) => {
                         e.preventDefault();
@@ -376,6 +376,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             }
                           >
                             Matricular Estudiantes
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/academic/student-enrollment"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Inscribir en Grupo
                           </NavLink>
                         </li>
                       </ul>

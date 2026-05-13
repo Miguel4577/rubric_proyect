@@ -3,6 +3,7 @@ import React from "react";
 interface Action {
     name: string;
     label: string;
+    color?: "red" | "blue" | "green";
 }
 
 interface GenericTableProps {
@@ -11,14 +12,28 @@ interface GenericTableProps {
     actions: Action[];
     onAction: (name: string, item: Record<string, any>) => void;
     columnHeaders?: Record<string, string>;
+    getActions?: (item: Record<string, any>) => Action[];
 }
 
-const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onAction, columnHeaders }) => {
+const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onAction, columnHeaders, getActions }) => {
     const getHeaderLabel = (col: string): string => {
         if (columnHeaders && columnHeaders[col]) {
             return columnHeaders[col];
         }
         return col.charAt(0).toUpperCase() + col.slice(1);
+    };
+
+    const getActionColor = (action: Action): string => {
+        const color = action.color || "blue";
+        switch (color) {
+            case "red":
+                return "text-red-500 hover:bg-red-100";
+            case "green":
+                return "text-green-500 hover:bg-green-100";
+            case "blue":
+            default:
+                return "text-blue-500 hover:bg-blue-100";
+        }
     };
     return (
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
@@ -60,28 +75,13 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
 
                                 <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                                     <div className="flex items-center gap-2">
-                                        {actions.map((action) => (
+                                        {(getActions ? getActions(item) : actions).map((action) => (
                                             <button
                                                 key={action.name}
                                                 onClick={() => onAction(action.name, item)}
                                                 type="button"
                                                 className={`rounded-md border border-stroke px-2 py-1 text-xs font-medium transition
-                                                    hover:bg-gray-2 dark:border-strokedark
-                                                    ${
-                                                        action.name === "delete"
-                                                            ? "text-red-500 hover:bg-red-100"
-                                                            : ""
-                                                    }
-                                                    ${
-                                                        action.name === "view"
-                                                            ? "text-blue-500 hover:bg-blue-100"
-                                                            : ""
-                                                    }
-                                                    ${
-                                                        action.name === "download"
-                                                            ? "text-green-500 hover:bg-green-100"
-                                                            : ""
-                                                    }
+                                                    hover:bg-gray-2 dark:border-strokedark ${getActionColor(action)}
                                                 `}
                                             >
                                                 {action.label}

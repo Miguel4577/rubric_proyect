@@ -97,7 +97,16 @@ class UserService {
 
     async deactivateUser(id: string): Promise<User> {
         try {
-            const response = await api.patch<ApiResponse<User>>(`${API_URL}${id}/deactivate`);
+            const response = await api.put<ApiResponse<User>>(`${API_URL}${id}`, { is_active: false });
+            return unwrapResponse<User>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async activateUser(id: string): Promise<User> {
+        try {
+            const response = await api.put<ApiResponse<User>>(`${API_URL}${id}`, { is_active: true });
             return unwrapResponse<User>(response.data);
         } catch (error) {
             throw new Error(getErrorMessage(error));

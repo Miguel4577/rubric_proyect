@@ -81,7 +81,7 @@ const StudentRegistration = () => {
         };
     };
 
-    const handleSubmit = async (values: RegistrationPayload, { setSubmitting }: any) => {
+    const handleSubmit = async (values: RegistrationPayload, { setSubmitting, resetForm }: any) => {
         try {
             const existingRegistration = registrations.find(
                 (r) =>
@@ -108,7 +108,8 @@ const StudentRegistration = () => {
             });
 
             setShowForm(false);
-            setSelectedStudentId("");
+            resetForm();
+            setSelectedStudentId(values.student_id);
             await loadData();
         } catch (error) {
             Swal.fire({
@@ -161,130 +162,7 @@ const StudentRegistration = () => {
             <Breadcrumb pageName="Matricular Estudiantes" />
 
             <div className="rounded-lg border border-gray-200 bg-white p-6 shadow">
-                <div className="mb-6 flex justify-between items-center">
-                    <h2 className="text-2xl font-bold text-gray-800">Matricular Estudiantes</h2>
-                    {!showForm && (
-                        <button
-                            onClick={() => setShowForm(true)}
-                            className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
-                        >
-                            + Nueva Matrícula
-                        </button>
-                    )}
-                </div>
-
-                {showForm && (
-                    <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6">
-                        <h3 className="mb-4 text-lg font-semibold text-gray-800">Nueva Matrícula</h3>
-
-                        <Formik
-                            initialValues={{
-                                student_id: "",
-                                career_id: "",
-                                admission_period: "",
-                                academic_status: "ACTIVE",
-                                is_active: true,
-                            }}
-                            validationSchema={RegistrationSchema}
-                            onSubmit={handleSubmit}
-                        >
-                            {({ isSubmitting, isValid }) => (
-                                <Form className="space-y-4">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div>
-                                            <label className="block font-semibold text-gray-700">Estudiante *</label>
-                                            <Field
-                                                as="select"
-                                                name="student_id"
-                                                className="w-full rounded border border-gray-300 px-3 py-2"
-                                            >
-                                                <option value="">-- Seleccionar estudiante --</option>
-                                                {students.map((student) => (
-                                                    <option key={student.id} value={student.id || ""}>
-                                                        {student.first_name} {student.last_name} ({student.identification})
-                                                    </option>
-                                                ))}
-                                            </Field>
-                                            <ErrorMessage name="student_id">
-                                                {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
-                                            </ErrorMessage>
-                                        </div>
-
-                                        <div>
-                                            <label className="block font-semibold text-gray-700">Carrera *</label>
-                                            <Field
-                                                as="select"
-                                                name="career_id"
-                                                className="w-full rounded border border-gray-300 px-3 py-2"
-                                            >
-                                                <option value="">-- Seleccionar carrera --</option>
-                                                {careers.map((career) => (
-                                                    <option key={career.id} value={career.id || ""}>
-                                                        {career.name} ({career.code})
-                                                    </option>
-                                                ))}
-                                            </Field>
-                                            <ErrorMessage name="career_id">
-                                                {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
-                                            </ErrorMessage>
-                                        </div>
-
-                                        <div>
-                                            <label className="block font-semibold text-gray-700">
-                                                Período de Admisión *
-                                            </label>
-                                            <Field
-                                                type="text"
-                                                name="admission_period"
-                                                placeholder="Ej: 2024-I, 2024-II"
-                                                className="w-full rounded border border-gray-300 px-3 py-2"
-                                            />
-                                            <ErrorMessage name="admission_period">
-                                                {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
-                                            </ErrorMessage>
-                                        </div>
-
-                                        <div>
-                                            <label className="block font-semibold text-gray-700">
-                                                Estado Académico *
-                                            </label>
-                                            <Field
-                                                as="select"
-                                                name="academic_status"
-                                                className="w-full rounded border border-gray-300 px-3 py-2"
-                                            >
-                                                <option value="ACTIVE">Activo</option>
-                                                <option value="SUSPENDED">Suspendido</option>
-                                                <option value="ON_LEAVE">Licencia</option>
-                                                <option value="WITHDRAWN">Retirado</option>
-                                            </Field>
-                                            <ErrorMessage name="academic_status">
-                                                {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
-                                            </ErrorMessage>
-                                        </div>
-                                    </div>
-
-                                    <div className="flex gap-3 pt-4">
-                                        <button
-                                            type="submit"
-                                            disabled={isSubmitting || !isValid}
-                                            className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
-                                        >
-                                            {isSubmitting ? "Guardando..." : "Matricular"}
-                                        </button>
-                                        <button
-                                            type="button"
-                                            onClick={() => setShowForm(false)}
-                                            className="rounded bg-gray-300 px-6 py-2 text-gray-700 hover:bg-gray-400"
-                                        >
-                                            Cancelar
-                                        </button>
-                                    </div>
-                                </Form>
-                            )}
-                        </Formik>
-                    </div>
-                )}
+                <h2 className="mb-6 text-2xl font-bold text-gray-800">Matricular Estudiantes</h2>
 
                 <div className="mb-6">
                     <label className="block font-semibold text-gray-700 mb-2">Seleccionar Estudiante</label>
@@ -303,25 +181,132 @@ const StudentRegistration = () => {
                 </div>
 
                 {selectedStudentId && (
-                    <div>
-                        <h3 className="mb-3 text-lg font-semibold text-gray-800">
-                            Matrículas ({tableData.length})
-                        </h3>
-                        {tableData.length === 0 ? (
-                            <p className="text-gray-500">Este estudiante no tiene matrículas registradas</p>
-                        ) : (
-                            <GenericTable
-                                data={tableData}
-                                columns={["careerName", "admissionPeriod", "academicStatus", "status"]}
-                                actions={[{ name: "cancel", label: "Cancelar" }]}
-                                onAction={(action, item) => {
-                                    if (action === "cancel" && item.status !== "Cancelada") {
-                                        void handleCancelRegistration(item.id as string);
-                                    }
-                                }}
-                            />
+                    <>
+                        {!showForm && (
+                            <div className="mb-6">
+                                <button
+                                    onClick={() => setShowForm(true)}
+                                    className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+                                >
+                                    + Agregar Matrícula
+                                </button>
+                            </div>
                         )}
-                    </div>
+
+                        {showForm && (
+                            <div className="mb-6 rounded-lg border border-gray-200 bg-gray-50 p-6">
+                                <h3 className="mb-4 text-lg font-semibold text-gray-800">Nueva Matrícula para {getStudentFullName(selectedStudentId)}</h3>
+
+                                <Formik
+                                    initialValues={{
+                                        student_id: selectedStudentId,
+                                        career_id: "",
+                                        admission_period: "",
+                                        academic_status: "ACTIVE",
+                                        is_active: true,
+                                    }}
+                                    validationSchema={RegistrationSchema}
+                                    onSubmit={handleSubmit}
+                                >
+                                    {({ isSubmitting, isValid }) => (
+                                        <Form className="space-y-4">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <label className="block font-semibold text-gray-700">Carrera *</label>
+                                                    <Field
+                                                        as="select"
+                                                        name="career_id"
+                                                        className="w-full rounded border border-gray-300 px-3 py-2"
+                                                    >
+                                                        <option value="">-- Seleccionar carrera --</option>
+                                                        {careers.map((career) => (
+                                                            <option key={career.id} value={career.id || ""}>
+                                                                {career.name} ({career.code})
+                                                            </option>
+                                                        ))}
+                                                    </Field>
+                                                    <ErrorMessage name="career_id">
+                                                        {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
+                                                    </ErrorMessage>
+                                                </div>
+
+                                                <div>
+                                                    <label className="block font-semibold text-gray-700">
+                                                        Período de Admisión *
+                                                    </label>
+                                                    <Field
+                                                        type="text"
+                                                        name="admission_period"
+                                                        placeholder="Ej: 2024-I, 2024-II"
+                                                        className="w-full rounded border border-gray-300 px-3 py-2"
+                                                    />
+                                                    <ErrorMessage name="admission_period">
+                                                        {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
+                                                    </ErrorMessage>
+                                                </div>
+
+                                                <div>
+                                                    <label className="block font-semibold text-gray-700">
+                                                        Estado Académico *
+                                                    </label>
+                                                    <Field
+                                                        as="select"
+                                                        name="academic_status"
+                                                        className="w-full rounded border border-gray-300 px-3 py-2"
+                                                    >
+                                                        <option value="ACTIVE">Activo</option>
+                                                        <option value="SUSPENDED">Suspendido</option>
+                                                        <option value="ON_LEAVE">Licencia</option>
+                                                        <option value="WITHDRAWN">Retirado</option>
+                                                    </Field>
+                                                    <ErrorMessage name="academic_status">
+                                                        {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
+                                                    </ErrorMessage>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex gap-3 pt-4">
+                                                <button
+                                                    type="submit"
+                                                    disabled={isSubmitting || !isValid}
+                                                    className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
+                                                >
+                                                    {isSubmitting ? "Guardando..." : "Matricular"}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setShowForm(false)}
+                                                    className="rounded bg-gray-300 px-6 py-2 text-gray-700 hover:bg-gray-400"
+                                                >
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </Form>
+                                    )}
+                                </Formik>
+                            </div>
+                        )}
+
+                        <div>
+                            <h3 className="mb-3 text-lg font-semibold text-gray-800">
+                                Matrículas ({tableData.length})
+                            </h3>
+                            {tableData.length === 0 ? (
+                                <p className="text-gray-500">Este estudiante no tiene matrículas registradas. Haz clic en "Agregar Matrícula" para crear una.</p>
+                            ) : (
+                                <GenericTable
+                                    data={tableData}
+                                    columns={["careerName", "admissionPeriod", "academicStatus", "status"]}
+                                    actions={[{ name: "cancel", label: "Cancelar" }]}
+                                    onAction={(action, item) => {
+                                        if (action === "cancel" && item.status !== "Cancelada") {
+                                            void handleCancelRegistration(item.id as string);
+                                        }
+                                    }}
+                                />
+                            )}
+                        </div>
+                    </>
                 )}
             </div>
         </div>
