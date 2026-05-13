@@ -278,6 +278,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             Gestionar Asignaturas
                           </NavLink>
                         </li>
+                        <li>
+                          <NavLink
+                            to="/academic/scales"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Definir Criterios y Escalas
+                          </NavLink>
+                        </li>
+                        <li>
+                          <NavLink
+                            to="/academic/rubrics"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Gestionar Rúbricas
+                          </NavLink>
+                        </li>
                       </ul>
                     </div>
                   </React.Fragment>

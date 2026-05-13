@@ -3,8 +3,14 @@ import { api } from "../interceptors/authInterceptor";
 import {
     Career,
     CareerPayload,
+    Criterion,
+    CriterionPayload,
     Semester,
     SemesterPayload,
+    Rubric,
+    RubricPayload,
+    Scale,
+    ScalePayload,
     Subject,
     SubjectPayload,
     StudyPlanVersion,
@@ -17,6 +23,7 @@ interface ApiResponse<T> {
 }
 
 const API_URL = "/academic";
+const EVALUATION_API_URL = "/evaluation";
 
 const unwrapResponse = <T>(payload: T | ApiResponse<T>): T => {
     if (payload && typeof payload === "object" && "data" in payload) {
@@ -218,6 +225,51 @@ class AcademicService {
     async deleteStudyPlanSubject(id: string): Promise<void> {
         try {
             await api.delete(`${API_URL}/study-plans/${id}`);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async getRubrics(): Promise<Rubric[]> {
+        try {
+            const response = await api.get<ApiResponse<Rubric[]>>(`${EVALUATION_API_URL}/rubrics`);
+            return unwrapResponse<Rubric[]>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async createRubric(payload: RubricPayload): Promise<Rubric> {
+        try {
+            const response = await api.post<ApiResponse<Rubric>>(`${EVALUATION_API_URL}/rubrics`, payload);
+            return unwrapResponse<Rubric>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async addCriterion(payload: CriterionPayload): Promise<Criterion> {
+        try {
+            const response = await api.post<ApiResponse<Criterion>>(`${EVALUATION_API_URL}/criteria`, payload);
+            return unwrapResponse<Criterion>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async addScale(payload: ScalePayload): Promise<Scale> {
+        try {
+            const response = await api.post<ApiResponse<Scale>>(`${EVALUATION_API_URL}/scales`, payload);
+            return unwrapResponse<Scale>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
+    async publishRubric(rubricId: string): Promise<Rubric> {
+        try {
+            const response = await api.patch<ApiResponse<Rubric>>(`${EVALUATION_API_URL}/rubrics/${rubricId}/publish`);
+            return unwrapResponse<Rubric>(response.data);
         } catch (error) {
             throw new Error(getErrorMessage(error));
         }
