@@ -20,6 +20,7 @@ const UserList= lazy(() => import('../pages/Users/ListUsers'));
 const UserCreate= lazy(() => import('../pages/Users/Create'));
 const UserUpdate= lazy(() => import('../pages/Users/Update'));
 const RoleList= lazy(() => import('../pages/Roles/List'));
+const StudentEnrollment = lazy(() => import('../pages/Academic/StudentEnrollment'));
 
 const coreRoutes = [
   {
@@ -71,6 +72,12 @@ const coreRoutes = [
     path: '/academic/assign-teacher',
     title: 'Asignar Docentes',
     component: AssignTeacherToGroup,
+  },
+
+    {
+    path: '/academic/student-enrollment',
+    title: 'Inscribir Estudiante en Grupo',
+    component: StudentEnrollment,
   },
   {
     path: '/academic/groups',
