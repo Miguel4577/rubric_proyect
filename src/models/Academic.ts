@@ -375,3 +375,10 @@ export interface GradeDetailPayload {
     score: number;
     comment?: string;
 }
+
+export interface FinalScoreRecord {
+    enrollment_id: string;
+    student_id: string;
+    official_final_score: number;
+    evaluations_count: number;
+}

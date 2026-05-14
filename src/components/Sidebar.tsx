@@ -322,6 +322,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             Calificar Estudiante con Rúbrica
                           </NavLink>
                         </li>
+                        <li>
+                          <NavLink
+                            to="/academic/evaluations/final-scores"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Registrar Nota Final
+                          </NavLink>
+                        </li>
                       </ul>
                     </div>
                   </React.Fragment>

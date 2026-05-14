@@ -13,7 +13,8 @@ const StudyPlans = lazy(() => import('../pages/Academic/StudyPlans'));
 const Subjects = lazy(() => import('../pages/Academic/Subjects'));
 const Scales = lazy(() => import('../pages/Academic/Rubrics/Scales/Scales'));
 const AssociateRubric = lazy(() => import('../pages/Academic/Evaluations/AssociateRubric'));
-const GradeStudent = lazy(() => import('../pages/Academic/Evaluations/GradeStudent'));
+const GradeStudent = lazy(() => import('../pages/Academic/Evaluations/GradeStudent/index'));
+const FinalScores = lazy(() => import('../pages/Academic/Evaluations/FinalScores/index'));
 const AssignTeacherToGroup = lazy(() => import('../pages/Academic/AssignTeacherToGroup'));
 const Groups = lazy(() => import('../pages/Academic/Groups'));
 const StudentRegistration = lazy(() => import('../pages/Academic/StudentRegistration'));
@@ -79,6 +80,11 @@ const coreRoutes = [
     path: '/academic/evaluations/grade-student',
     title: 'Calificar Estudiante con Rúbrica',
     component: GradeStudent,
+  },
+  {
+    path: '/academic/evaluations/final-scores',
+    title: 'Registrar Nota Final',
+    component: FinalScores,
   },
   {
     path: '/academic/assign-teacher',

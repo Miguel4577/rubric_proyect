@@ -12,6 +12,7 @@ import {
     GradePayload,
     GradeDetail,
     GradeDetailPayload,
+    FinalScoreRecord,
 } from "../models/Academic";
 
 interface ApiResponse<T> {
@@ -286,12 +287,12 @@ class EvaluationService {
         }
     }
 
-    async registerFinalScores(groupId: string): Promise<any> {
+    async registerFinalScores(groupId: string): Promise<FinalScoreRecord[]> {
         try {
-            const response = await api.post<ApiResponse<any>>(
+            const response = await api.post<ApiResponse<FinalScoreRecord[]>>(
                 `${API_URL}/groups/${groupId}/register-final-scores`
             );
-            return unwrapResponse<any>(response.data);
+            return unwrapResponse<FinalScoreRecord[]>(response.data);
         } catch (error) {
             throw new Error(getErrorMessage(error));
         }
