@@ -337,16 +337,24 @@ export interface Grade {
     enrollment?: Enrollment;
     rubric?: Rubric;
     grade_details?: GradeDetail[];
+    details?: GradeDetail[];
     created_at?: string;
     updated_at?: string;
+}
+
+export interface GradeSubmissionDetail {
+    scale_id: string;
+    comment?: string;
 }
 
 export interface GradePayload {
     enrollment_id: string;
     rubric_id: string;
+    evaluation_id?: string;
     final_score: number;
     status?: string;
     observations?: string;
+    details?: GradeSubmissionDetail[];
 }
 
 export interface GradeDetail {

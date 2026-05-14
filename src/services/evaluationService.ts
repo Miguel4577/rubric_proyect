@@ -268,6 +268,15 @@ class EvaluationService {
         }
     }
 
+    async gradeStudent(payload: GradePayload): Promise<Grade> {
+        try {
+            const response = await api.post<ApiResponse<Grade>>(`${API_URL}/grades`, payload);
+            return unwrapResponse<Grade>(response.data);
+        } catch (error) {
+            throw new Error(getErrorMessage(error));
+        }
+    }
+
     async updateGrade(id: string, payload: Partial<GradePayload>): Promise<Grade> {
         try {
             const response = await api.put<ApiResponse<Grade>>(`${API_URL}/grades/${id}`, payload);

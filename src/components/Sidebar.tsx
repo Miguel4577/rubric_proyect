@@ -311,6 +311,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             Asociar Rúbrica a Evaluación
                           </NavLink>
                         </li>
+                        <li>
+                          <NavLink
+                            to="/academic/evaluations/grade-student"
+                            className={({ isActive }) =>
+                              'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ' +
+                              (isActive && '!text-white')
+                            }
+                          >
+                            Calificar Estudiante con Rúbrica
+                          </NavLink>
+                        </li>
                       </ul>
                     </div>
                   </React.Fragment>
