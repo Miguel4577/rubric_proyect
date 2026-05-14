@@ -8,8 +8,7 @@ import ScaleForm from './forms/ScaleForm';
 import ScaleLevelsEditor from './components/ScaleLevelsEditor';
 import {
   ScaleLevelDraft,
-  ScaleDraft,
-  createInitialScaleDraft,
+  useScaleDraft,
 } from './hooks/useScaleDraft';
 
 const Scales = () => {
@@ -17,22 +16,25 @@ const Scales = () => {
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
-  const [draft, setDraft] = useState<ScaleDraft>(createInitialScaleDraft());
   const [selectedCriterionId, setSelectedCriterionId] = useState('');
   const [reusableLevels, setReusableLevels] = useState<
     Array<{ sourceCriterionId: string; criterionName: string; level: ScaleLevelDraft }>
   >([]);
 
-  const totalLevels = useMemo(
-    () => draft.criteria.reduce((sum, criterion) => sum + criterion.levels.length, 0),
-    [draft.criteria]
-  );
-
-  const isReadyToPublish =
-    draft.rubricName.trim().length > 0 &&
-    draft.subjectId.trim().length > 0 &&
-    draft.criteria.length > 0 &&
-    draft.criteria.every((criterion) => criterion.levels.length >= 2 && criterion.levels.length <= 5);
+  const {
+    draft,
+    totalLevels,
+    isReadyToPublish,
+    updateField,
+    updateCriterion,
+    updateLevel,
+    addCriterion,
+    removeCriterion,
+    addLevel,
+    removeLevel,
+    reuseLevel,
+    resetDraft,
+  } = useScaleDraft();
 
   const subjectOptions = useMemo(
     () => [
@@ -128,10 +130,6 @@ const Scales = () => {
     void loadData();
   }, []);
 
-  const updateField = <K extends keyof ScaleDraft>(field: K, value: ScaleDraft[K]) => {
-    setDraft((current) => ({ ...current, [field]: value }));
-  };
-
   const handleReuse = (sourceCriterionId: string, level: ScaleLevelDraft) => {
     if (!selectedCriterionId) {
       void Swal.fire({
@@ -142,24 +140,7 @@ const Scales = () => {
       return;
     }
 
-    setDraft((current) => ({
-      ...current,
-      criteria: current.criteria.map((criterion) =>
-        criterion.id === selectedCriterionId
-          ? {
-              ...criterion,
-              levels: [
-                ...criterion.levels,
-                {
-                  ...level,
-                  id: crypto.randomUUID(),
-                  sourceCriterionId,
-                },
-              ],
-            }
-          : criterion
-      ),
-    }));
+    reuseLevel(selectedCriterionId, sourceCriterionId, level);
   };
 
   const openPreview = () => {
@@ -264,7 +245,7 @@ const Scales = () => {
           ? 'Las escalas quedaron publicadas correctamente.'
           : 'Las escalas quedaron guardadas como borrador.',
       });
-      setDraft(createInitialScaleDraft());
+      resetDraft();
       setSelectedCriterionId('');
     } catch (error) {
       await Swal.fire({
@@ -321,77 +302,12 @@ const Scales = () => {
 
       <ScaleLevelsEditor
         criteria={draft.criteria}
-        onAddCriterion={() => {
-          setDraft((current) => ({
-            ...current,
-            criteria: [...current.criteria, { id: crypto.randomUUID(), name: '', levels: [] }],
-          }));
-        }}
-        onRemoveCriterion={(criterionId) => {
-          setDraft((current) => ({
-            ...current,
-            criteria: current.criteria.length > 1
-              ? current.criteria.filter((criterion) => criterion.id !== criterionId)
-              : current.criteria,
-          }));
-        }}
-        onUpdateCriterion={(criterionId, field, value) => {
-          setDraft((current) => ({
-            ...current,
-            criteria: current.criteria.map((criterion) =>
-              criterion.id === criterionId ? { ...criterion, [field]: value } : criterion
-            ),
-          }));
-        }}
-        onAddLevel={(criterionId) => {
-          setDraft((current) => ({
-            ...current,
-            criteria: current.criteria.map((criterion) =>
-              criterion.id === criterionId && criterion.levels.length < 5
-                ? {
-                    ...criterion,
-                    levels: [
-                      ...criterion.levels,
-                      {
-                        id: crypto.randomUUID(),
-                        label: '',
-                        description: '',
-                        value: 0,
-                      },
-                    ],
-                  }
-                : criterion
-            ),
-          }));
-        }}
-        onRemoveLevel={(criterionId, levelId) => {
-          setDraft((current) => ({
-            ...current,
-            criteria: current.criteria.map((criterion) =>
-              criterion.id === criterionId && criterion.levels.length > 2
-                ? {
-                    ...criterion,
-                    levels: criterion.levels.filter((level) => level.id !== levelId),
-                  }
-                : criterion
-            ),
-          }));
-        }}
-        onUpdateLevel={(criterionId, levelId, field, value) => {
-          setDraft((current) => ({
-            ...current,
-            criteria: current.criteria.map((criterion) =>
-              criterion.id !== criterionId
-                ? criterion
-                : {
-                    ...criterion,
-                    levels: criterion.levels.map((level) =>
-                      level.id === levelId ? { ...level, [field]: value } : level
-                    ),
-                  }
-            ),
-          }));
-        }}
+        onAddCriterion={addCriterion}
+        onRemoveCriterion={removeCriterion}
+        onUpdateCriterion={updateCriterion}
+        onAddLevel={addLevel}
+        onRemoveLevel={removeLevel}
+        onUpdateLevel={updateLevel}
       />
 
       <section className="rounded-lg border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
