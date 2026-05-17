@@ -1,17 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import UserOne from '../images/user/user-01.png';
 //Importar la torre de control para obtener el usuario actual
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import SecurityService from "../services/securityService";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const user = useSelector((state: RootState) => state.user.user);
+  const navigate = useNavigate();
   
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+
+  const handleLogout = () => {
+    SecurityService.logout();
+    setDropdownOpen(false);
+    navigate('/auth/signin', { replace: true });
+  };
 
   // close on click outside
   useEffect(() => {
@@ -49,9 +57,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {user?.code || 'Guest'}
+            {user?.code|| 'Guest'}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">{user?.role}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
@@ -159,7 +167,11 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"

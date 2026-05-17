@@ -247,7 +247,7 @@ const CareersSemesters = () => {
                 <div className="rounded-sm border border-stroke bg-white p-5 shadow-default dark:border-strokedark dark:bg-boxdark">
                     <p className="text-sm text-body">Modo de trabajo</p>
                     <h3 className="mt-2 text-xl font-bold text-black dark:text-white">Solo frontend</h3>
-                    <p className="mt-1 text-sm text-body">Se usan los endpoints existentes sin tocar backend.</p>
+
                 </div>
             </div>
 

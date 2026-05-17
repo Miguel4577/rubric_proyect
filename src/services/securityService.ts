@@ -5,6 +5,12 @@ import { LocalStorageProvider } from "../storage/LocalStorageProvider";
 import { store } from "../store/store";
 import { setUser } from "../store/userSlice";
 
+interface AuthSession {
+    access_token: string;
+    token_type?: string;
+    user: User;
+}
+
 class SecurityService extends EventTarget {
     private readonly keyToken: string;
     private readonly userKey: string;
@@ -64,21 +70,27 @@ class SecurityService extends EventTarget {
         }
 
         const data = response.data?.data ?? response.data;
+        return this.setSession({
+            access_token: data?.access_token ?? data?.token,
+            token_type: data?.token_type,
+            user: data.user,
+        });
+    }
 
-        this.user = data.user;
+    setSession(session: AuthSession) {
+        this.user = session.user;
 
-        // Ajusta esto según la estructura real de la respuesta
         this.storage.setItem(this.userKey, JSON.stringify(this.user));
-
-        const token = data?.access_token ?? data?.token;
-        if (token) {
-            this.storage.setItem(this.keyToken, token);
-        }
+        this.storage.setItem(this.keyToken, session.access_token);
 
         store.dispatch(setUser(this.user));
         this.dispatchEvent(new CustomEvent("userChange", { detail: this.user }));
 
-        return this.user;
+        return {
+            access_token: session.access_token,
+            token_type: session.token_type ?? "Bearer",
+            user: this.user,
+        };
     }
 
     getUser() {
@@ -88,8 +100,7 @@ class SecurityService extends EventTarget {
     logout() {
         this.user = null;
 
-        this.storage.removeItem(this.userKey);
-        this.storage.removeItem(this.keyToken);
+        this.storage.clear();
 
         this.dispatchEvent(new CustomEvent("userChange", { detail: null }));
         store.dispatch(setUser(null));

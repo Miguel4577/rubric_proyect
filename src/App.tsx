@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
 import ECommerce from './pages/Dashboard/ECommerce';
@@ -9,8 +9,15 @@ import Loader from './common/Loader';
 import routes from './routes';
 
 import ProtectedRoute from "../src/components/Auth/ProtectedRoute";
+import RoleGuard from './components/Auth/RoleGuard';
+import { ALL_ROLES } from './config/accessControl';
+import SecurityService from './services/securityService';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
+
+const RootRedirect = () => {
+  return SecurityService.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Navigate to="/auth/signin" replace />;
+};
 
 function App() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -29,22 +36,25 @@ function App() {
         containerClassName="overflow-auto"
       />
       <Routes>
+        <Route path="/" element={<RootRedirect />} />
         <Route path="/auth/signin" element={<SignIn />} />
         <Route path="/auth/signup" element={<SignUp />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<DefaultLayout />}>
-            <Route index element={<ECommerce />} />
-            {routes.map((routes, index) => {
-              const { path, component: Component } = routes;
+            <Route path="/dashboard" element={<RoleGuard allowedRoles={ALL_ROLES}><ECommerce /></RoleGuard>} />
+            {routes.map((route, index) => {
+              const { path, component: Component, allowedRoles } = route;
               return (
                 <Route
                   key={index}
                   path={path}
                   element={
-                    <Suspense fallback={<Loader />}>
-                      <Component />
-                    </Suspense>
+                    <RoleGuard allowedRoles={allowedRoles}>
+                      <Suspense fallback={<Loader />}>
+                        <Component />
+                      </Suspense>
+                    </RoleGuard>
                   }
                 />
               );
