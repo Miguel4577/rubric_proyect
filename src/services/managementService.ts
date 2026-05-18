@@ -114,7 +114,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Registration[]>>(`${API_URL}/registrations`);
             return unwrapResponse<Registration[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -123,7 +123,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Registration>>(`${API_URL}/registrations/${id}`);
             return unwrapResponse<Registration>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -132,7 +132,7 @@ class ManagementService {
             const response = await api.post<ApiResponse<Registration>>(`${API_URL}/registrations`, payload);
             return unwrapResponse<Registration>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -141,7 +141,7 @@ class ManagementService {
             const response = await api.put<ApiResponse<Registration>>(`${API_URL}/registrations/${id}`, payload);
             return unwrapResponse<Registration>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -152,7 +152,7 @@ class ManagementService {
             });
             return unwrapResponse<Registration>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -162,7 +162,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Enrollment[]>>(`${API_URL}/enrollments`);
             return unwrapResponse<Enrollment[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -171,7 +171,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Enrollment>>(`${API_URL}/enrollments/${id}`);
             return unwrapResponse<Enrollment>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -180,7 +180,7 @@ class ManagementService {
             const response = await api.post<ApiResponse<Enrollment>>(`${API_URL}/enrollments`, payload);
             return unwrapResponse<Enrollment>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -189,7 +189,7 @@ class ManagementService {
             const response = await api.put<ApiResponse<Enrollment>>(`${API_URL}/enrollments/${id}`, payload);
             return unwrapResponse<Enrollment>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
