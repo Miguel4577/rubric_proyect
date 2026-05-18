@@ -26,3 +26,5 @@ export const getApiErrorMessage = (error: unknown, fallback = "Ocurrió un error
 
     return fallback;
 };
+
+export const getErrorMessage = getApiErrorMessage;

@@ -2,7 +2,6 @@ import { Suspense, lazy, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 
-import ECommerce from './pages/Dashboard/ECommerce';
 import SignIn from './pages/Authentication/SignIn';
 import SignUp from './pages/Authentication/SignUp';
 import Loader from './common/Loader';
@@ -14,6 +13,7 @@ import { ALL_ROLES } from './config/accessControl';
 import SecurityService from './services/securityService';
 
 const DefaultLayout = lazy(() => import('./layout/DefaultLayout'));
+const Welcome = lazy(() => import('./pages/Dashboard/Welcome'));
 
 const RootRedirect = () => {
   return SecurityService.isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Navigate to="/auth/signin" replace />;
@@ -42,7 +42,7 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route element={<DefaultLayout />}>
-            <Route path="/dashboard" element={<RoleGuard allowedRoles={ALL_ROLES}><ECommerce /></RoleGuard>} />
+            <Route path="/dashboard" element={<RoleGuard allowedRoles={ALL_ROLES}><Welcome /></RoleGuard>} />
             {routes.map((route, index) => {
               const { path, component: Component, allowedRoles } = route;
               return (

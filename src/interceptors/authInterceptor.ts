@@ -13,8 +13,10 @@ export class AuthInterceptor {
     constructor() {
         this.storage = new LocalStorageProvider();
 
+        const apiUrl = import.meta.env.VITE_API_URL?.trim() || "http://127.0.0.1:5000/api";
+
         this.api = axios.create({
-            baseURL: import.meta.env.VITE_API_URL,
+            baseURL: apiUrl.replace(/\/+$/, ""),
             headers: { "Content-Type": "application/json" },
         });
 
