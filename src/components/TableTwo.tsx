@@ -1,7 +1,7 @@
-import ProductOne from '../images/product/product-01.png';
-import ProductTwo from '../images/product/product-02.png';
-import ProductThree from '../images/product/product-03.png';
-import ProductFour from '../images/product/product-04.png';
+import ProductOne from '../images/cover/cover-01.png';
+import ProductTwo from '../images/user/user-01.png';
+import ProductThree from '../images/user/user-02.png';
+import ProductFour from '../images/user/user-03.png';
 
 const TableTwo = () => {
   return (

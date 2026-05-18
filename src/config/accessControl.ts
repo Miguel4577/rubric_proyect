@@ -6,6 +6,7 @@ const storage = new LocalStorageProvider();
 export const ALL_ROLES: UserRole[] = ["ADMIN", "TEACHER", "STUDENT"];
 export const ADMIN_ONLY: UserRole[] = ["ADMIN"];
 export const ADMIN_TEACHER: UserRole[] = ["ADMIN", "TEACHER"];
+export const STUDENT_ONLY: UserRole[] = ["STUDENT"];
 
 export const getCurrentUser = (): User | null => {
     const storedUser = storage.getItem("user");

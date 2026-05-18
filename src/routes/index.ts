@@ -1,5 +1,5 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
-import { ADMIN_ONLY, ADMIN_TEACHER, ALL_ROLES } from '../config/accessControl';
+import { ADMIN_ONLY, ADMIN_TEACHER, ALL_ROLES, STUDENT_ONLY } from '../config/accessControl';
 import { UserRole } from '../models/User';
 
 interface AppRoute {
@@ -24,6 +24,8 @@ const Scales = lazy(() => import('../pages/Academic/Rubrics/Scales/Scales'));
 const AssociateRubric = lazy(() => import('../pages/Academic/Evaluations/AssociateRubric'));
 const GradeStudent = lazy(() => import('../pages/Academic/Evaluations/GradeStudent/index'));
 const FinalScores = lazy(() => import('../pages/Academic/Evaluations/FinalScores/index'));
+const RubricConsultation = lazy(() => import('../pages/Academic/Students/RubricConsultation'));
+const GradeDetails = lazy(() => import('../pages/Academic/Students/GradeDetails'));
 const AssignTeacherToGroup = lazy(() => import('../pages/Academic/AssignTeacherToGroup'));
 const Groups = lazy(() => import('../pages/Academic/Groups'));
 const StudentRegistration = lazy(() => import('../pages/Academic/StudentRegistration'));
@@ -106,6 +108,18 @@ const coreRoutes: AppRoute[] = [
     title: 'Registrar Nota Final',
     component: FinalScores,
     allowedRoles: ADMIN_TEACHER,
+  },
+  {
+    path: '/academic/student/rubric-consultation',
+    title: 'Consultar Rúbrica',
+    component: RubricConsultation,
+    allowedRoles: STUDENT_ONLY,
+  },
+  {
+    path: '/academic/student/grade-details',
+    title: 'Ver Calificaciones',
+    component: GradeDetails,
+    allowedRoles: STUDENT_ONLY,
   },
   {
     path: '/academic/assign-teacher',
