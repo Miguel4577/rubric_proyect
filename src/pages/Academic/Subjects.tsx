@@ -181,7 +181,7 @@ const Subjects = () => {
                     {!showForm && (
                         <button
                             onClick={() => setShowForm(true)}
-                            className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+                            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90"
                         >
                             + Nueva Asignatura
                         </button>
@@ -258,14 +258,14 @@ const Subjects = () => {
                                         <button
                                             type="submit"
                                             disabled={isSubmitting || !isValid}
-                                            className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
+                                            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {isSubmitting ? "Guardando..." : "Guardar"}
                                         </button>
                                         <button
                                             type="button"
                                             onClick={handleCancel}
-                                            className="rounded bg-gray-300 px-6 py-2 text-gray-700 hover:bg-gray-400"
+                                            className="inline-flex items-center justify-center rounded-md border border-stroke px-4 py-2 text-sm font-medium text-black transition hover:bg-gray-2 dark:border-strokedark dark:text-white dark:hover:bg-meta-4"
                                         >
                                             Cancelar
                                         </button>

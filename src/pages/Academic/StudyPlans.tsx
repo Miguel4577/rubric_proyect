@@ -113,6 +113,7 @@ const StudyPlans = () => {
             title: "¿Desea eliminar esta asignatura?",
             text: "Esta acción no se puede deshacer",
             showCancelButton: true,
+            confirmButtonColor: "#d33",
             confirmButtonText: "Sí, eliminar",
             cancelButtonText: "Cancelar",
         });
@@ -272,7 +273,7 @@ const StudyPlans = () => {
                                                     <td className="px-4 py-2 text-center">
                                                         <button
                                                             onClick={() => removeSubjectFromStudyPlan(index)}
-                                                            className="text-red-600 hover:text-red-800"
+                                                            className="inline-flex items-center justify-center rounded-md bg-danger px-3 py-1.5 text-xs font-medium text-white transition hover:bg-opacity-90"
                                                         >
                                                             Eliminar
                                                         </button>
@@ -289,7 +290,7 @@ const StudyPlans = () => {
                             <button
                                 onClick={saveStudyPlan}
                                 disabled={selectedSubjects.length === 0}
-                                className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
+                                className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 Guardar Plan de Estudios
                             </button>
@@ -311,7 +312,7 @@ const StudyPlans = () => {
                                         };
                                     })}
                                     columns={["code", "name", "credits", "semester", "created"]}
-                                    actions={[{ name: "delete", label: "Eliminar" }]}
+                                    actions={[{ name: "delete", label: "Eliminar", color: "red" }]}
                                     columnHeaders={{
                                         code: "Código",
                                         name: "Nombre",

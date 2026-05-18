@@ -283,7 +283,7 @@ const CareersSemesters = () => {
                                 onClick={() => {
                                     setCareerForm(initialCareerForm);
                                 }}
-                                className="rounded-md border border-stroke px-3 py-2 text-sm font-medium hover:bg-gray-2 dark:border-strokedark"
+                                className="inline-flex items-center justify-center rounded-md border border-stroke px-4 py-2 text-sm font-medium text-black transition hover:bg-gray-2 dark:border-strokedark dark:text-white dark:hover:bg-meta-4"
                             >
                                 Nueva carrera
                             </button>
@@ -346,13 +346,13 @@ const CareersSemesters = () => {
                                 <button
                                     onClick={() => void submitCareer()}
                                     disabled={loading}
-                                    className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+                                    className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     Guardar carrera
                                 </button>
                                 <button
                                     onClick={resetForms}
-                                    className="rounded-md border border-stroke px-4 py-2 text-sm font-medium dark:border-strokedark"
+                                    className="inline-flex items-center justify-center rounded-md border border-stroke px-4 py-2 text-sm font-medium text-black transition hover:bg-gray-2 dark:border-strokedark dark:text-white dark:hover:bg-meta-4"
                                 >
                                     Limpiar
                                 </button>
@@ -369,7 +369,7 @@ const CareersSemesters = () => {
                                 onClick={() => {
                                     setSemesterForm(initialSemesterForm);
                                 }}
-                                className="rounded-md border border-stroke px-3 py-2 text-sm font-medium hover:bg-gray-2 dark:border-strokedark"
+                                className="inline-flex items-center justify-center rounded-md border border-stroke px-4 py-2 text-sm font-medium text-black transition hover:bg-gray-2 dark:border-strokedark dark:text-white dark:hover:bg-meta-4"
                             >
                                 Nuevo semestre
                             </button>
@@ -443,13 +443,13 @@ const CareersSemesters = () => {
                                 <button
                                     onClick={() => void submitSemester()}
                                     disabled={loading}
-                                    className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-white disabled:opacity-50"
+                                    className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     Guardar semestre
                                 </button>
                                 <button
                                     onClick={resetForms}
-                                    className="rounded-md border border-stroke px-4 py-2 text-sm font-medium dark:border-strokedark"
+                                    className="inline-flex items-center justify-center rounded-md border border-stroke px-4 py-2 text-sm font-medium text-black transition hover:bg-gray-2 dark:border-strokedark dark:text-white dark:hover:bg-meta-4"
                                 >
                                     Limpiar
                                 </button>

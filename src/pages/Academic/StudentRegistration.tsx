@@ -128,6 +128,7 @@ const StudentRegistration = () => {
             title: "¿Desea cancelar esta matrícula?",
             text: "El estudiante será retirado de esta carrera",
             showCancelButton: true,
+            confirmButtonColor: "#d33",
             confirmButtonText: "Sí, cancelar",
             cancelButtonText: "No, mantener",
         });
@@ -186,7 +187,7 @@ const StudentRegistration = () => {
                             <div className="mb-6">
                                 <button
                                     onClick={() => setShowForm(true)}
-                                    className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700"
+                                    className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90"
                                 >
                                     + Agregar Matrícula
                                 </button>
@@ -269,14 +270,14 @@ const StudentRegistration = () => {
                                                 <button
                                                     type="submit"
                                                     disabled={isSubmitting || !isValid}
-                                                    className="rounded bg-blue-600 px-6 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400"
+                                                    className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                                                 >
                                                     {isSubmitting ? "Guardando..." : "Matricular"}
                                                 </button>
                                                 <button
                                                     type="button"
                                                     onClick={() => setShowForm(false)}
-                                                    className="rounded bg-gray-300 px-6 py-2 text-gray-700 hover:bg-gray-400"
+                                                    className="inline-flex items-center justify-center rounded-md border border-stroke px-4 py-2 text-sm font-medium text-black transition hover:bg-gray-2 dark:border-strokedark dark:text-white dark:hover:bg-meta-4"
                                                 >
                                                     Cancelar
                                                 </button>
@@ -297,7 +298,7 @@ const StudentRegistration = () => {
                                 <GenericTable
                                     data={tableData}
                                     columns={["careerName", "admissionPeriod", "academicStatus", "status"]}
-                                    actions={[{ name: "cancel", label: "Cancelar" }]}
+                                    actions={[{ name: "cancel", label: "Cancelar", color: "red" }]}
                                     onAction={(action, item) => {
                                         if (action === "cancel" && item.status !== "Cancelada") {
                                             void handleCancelRegistration(item.id as string);

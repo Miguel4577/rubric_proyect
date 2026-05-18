@@ -195,6 +195,7 @@ const StudentEnrollment = () => {
             title: "¿Cancelar inscripción?",
             text: "Esta acción no se puede deshacer",
             showCancelButton: true,
+            confirmButtonColor: "#d33",
             confirmButtonText: "Sí, cancelar",
             cancelButtonText: "No",
         });
@@ -236,7 +237,7 @@ const StudentEnrollment = () => {
             <div className="mb-8">
                 <button
                     onClick={() => setShowForm(!showForm)}
-                    className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-center font-medium text-white hover:bg-opacity-90"
+                    className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90"
                 >
                     {showForm ? "Cancelar" : "Nuevo Enrollment"}
                 </button>
@@ -347,7 +348,7 @@ const StudentEnrollment = () => {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="inline-flex items-center justify-center rounded-md bg-primary px-6 py-3 text-center font-medium text-white hover:bg-opacity-90 disabled:opacity-50"
+                                    className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     {isSubmitting ? "Guardando..." : "Inscribir"}
                                 </button>
@@ -371,7 +372,7 @@ const StudentEnrollment = () => {
                         semester: "Semestre",
                         status: "Estado",
                     }}
-                    actions={[{ name: "delete", label: "Cancelar" }]}
+                    actions={[{ name: "delete", label: "Cancelar", color: "red" }]}
                     onAction={(action, item) => {
                         if (action === "delete") {
                             void handleDelete(item.id);

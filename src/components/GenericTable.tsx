@@ -23,16 +23,17 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
         return col.charAt(0).toUpperCase() + col.slice(1);
     };
 
-    const getActionColor = (action: Action): string => {
+    const getActionClassName = (action: Action): string => {
         const color = action.color || "blue";
+
         switch (color) {
             case "red":
-                return "text-red-500 hover:bg-red-100";
+                return "inline-flex items-center justify-center rounded-md bg-danger px-3 py-1.5 text-xs font-medium text-white transition hover:bg-opacity-90";
             case "green":
-                return "text-green-500 hover:bg-green-100";
+                return "inline-flex items-center justify-center rounded-md bg-meta-3 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-opacity-90";
             case "blue":
             default:
-                return "text-blue-500 hover:bg-blue-100";
+                return "inline-flex items-center justify-center rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-white transition hover:bg-opacity-90";
         }
     };
     return (
@@ -80,9 +81,7 @@ const GenericTable: React.FC<GenericTableProps> = ({ data, columns, actions, onA
                                                 key={action.name}
                                                 onClick={() => onAction(action.name, item)}
                                                 type="button"
-                                                className={`rounded-md border border-stroke px-2 py-1 text-xs font-medium transition
-                                                    hover:bg-gray-2 dark:border-strokedark ${getActionColor(action)}
-                                                `}
+                                                className={getActionClassName(action)}
                                             >
                                                 {action.label}
                                             </button>
