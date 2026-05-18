@@ -1,4 +1,5 @@
 import { api } from "../interceptors/authInterceptor";
+import { ApiResponse, getApiErrorMessage, unwrapResponse } from "./apiHelpers";
 import {
     Rubric,
     RubricPayload,
@@ -15,26 +16,7 @@ import {
     FinalScoreRecord,
 } from "../models/Academic";
 
-interface ApiResponse<T> {
-    message: string;
-    data: T;
-}
-
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
-
-// Utility functions
-const unwrapResponse = <T>(response: ApiResponse<T>): T => response.data;
-
-const getErrorMessage = (error: unknown): string => {
-    if (error instanceof Error) {
-        const axiosError = error as any;
-        if (axiosError.response?.data?.message) {
-            return axiosError.response.data.message;
-        }
-        return error.message;
-    }
-    return "An unknown error occurred";
-};
 
 class EvaluationService {
     // ===== Rubric Methods =====
@@ -43,7 +25,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Rubric[]>>(`${API_URL}/rubrics`);
             return unwrapResponse<Rubric[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -52,7 +34,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Rubric>>(`${API_URL}/rubrics/${id}`);
             return unwrapResponse<Rubric>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -61,7 +43,7 @@ class EvaluationService {
             const response = await api.post<ApiResponse<Rubric>>(`${API_URL}/rubrics`, payload);
             return unwrapResponse<Rubric>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -70,7 +52,7 @@ class EvaluationService {
             const response = await api.put<ApiResponse<Rubric>>(`${API_URL}/rubrics/${id}`, payload);
             return unwrapResponse<Rubric>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 

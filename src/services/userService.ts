@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "../interceptors/authInterceptor";
 import {
     CreateUserPayload,
@@ -6,30 +5,9 @@ import {
     User,
     UserFilters,
 } from "../models/User";
+import { ApiResponse, getApiErrorMessage, unwrapResponse } from "./apiHelpers";
 
 const API_URL = "/users/";
-
-interface ApiResponse<T> {
-    message: string;
-    data: T;
-}
-
-const unwrapResponse = <T>(payload: T | ApiResponse<T>): T => {
-    if (payload && typeof payload === "object" && "data" in payload) {
-        return (payload as ApiResponse<T>).data;
-    }
-    return payload as T;
-};
-
-const getErrorMessage = (error: unknown): string => {
-    if (axios.isAxiosError(error)) {
-        const apiMessage = error.response?.data?.message;
-        if (typeof apiMessage === "string") {
-            return apiMessage;
-        }
-    }
-    return "Ocurrió un error inesperado";
-};
 
 class UserService {
     async getUsers(): Promise<User[]> {
@@ -37,7 +15,7 @@ class UserService {
             const response = await api.get<ApiResponse<User[]>>(API_URL);
             return unwrapResponse<User[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -64,7 +42,7 @@ class UserService {
             const response = await api.get<ApiResponse<User[]>>(`${API_URL}search`, { params });
             return unwrapResponse<User[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -73,7 +51,7 @@ class UserService {
             const response = await api.get<ApiResponse<User>>(`${API_URL}${id}`);
             return unwrapResponse<User>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -82,7 +60,7 @@ class UserService {
             const response = await api.post<ApiResponse<User>>(API_URL, user);
             return unwrapResponse<User>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -91,7 +69,7 @@ class UserService {
             const response = await api.put<ApiResponse<User>>(`${API_URL}${id}`, user);
             return unwrapResponse<User>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -109,7 +87,7 @@ class UserService {
             const response = await api.put<ApiResponse<User>>(`${API_URL}${id}`, { is_active: true });
             return unwrapResponse<User>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 }

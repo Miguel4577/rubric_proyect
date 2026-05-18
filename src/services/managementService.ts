@@ -1,4 +1,3 @@
-import axios from "axios";
 import { api } from "../interceptors/authInterceptor";
 import {
     Teacher,
@@ -10,30 +9,9 @@ import {
     Enrollment,
     EnrollmentPayload,
 } from "../models/Academic";
-
-interface ApiResponse<T> {
-    message: string;
-    data: T;
-}
+import { ApiResponse, getApiErrorMessage, unwrapResponse } from "./apiHelpers";
 
 const API_URL = "/academic";
-
-const unwrapResponse = <T>(payload: T | ApiResponse<T>): T => {
-    if (payload && typeof payload === "object" && "data" in payload) {
-        return (payload as ApiResponse<T>).data;
-    }
-    return payload as T;
-};
-
-const getErrorMessage = (error: unknown): string => {
-    if (axios.isAxiosError(error)) {
-        const apiMessage = error.response?.data?.message;
-        if (typeof apiMessage === "string") {
-            return apiMessage;
-        }
-    }
-    return "Ocurrió un error inesperado";
-};
 
 class ManagementService {
     // ============ TEACHERS ============
@@ -42,7 +20,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Teacher[]>>(`${API_URL}/teachers`);
             return unwrapResponse<Teacher[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -51,7 +29,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Teacher>>(`${API_URL}/teachers/${id}`);
             return unwrapResponse<Teacher>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -61,7 +39,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Student[]>>(`${API_URL}/students`);
             return unwrapResponse<Student[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -70,7 +48,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Student>>(`${API_URL}/students/${id}`);
             return unwrapResponse<Student>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -80,7 +58,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Group[]>>(`${API_URL}/groups`);
             return unwrapResponse<Group[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -89,7 +67,7 @@ class ManagementService {
             const response = await api.get<ApiResponse<Group>>(`${API_URL}/groups/${id}`);
             return unwrapResponse<Group>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -98,7 +76,7 @@ class ManagementService {
             const response = await api.post<ApiResponse<Group>>(`${API_URL}/groups`, payload);
             return unwrapResponse<Group>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -107,7 +85,7 @@ class ManagementService {
             const response = await api.put<ApiResponse<Group>>(`${API_URL}/groups/${id}`, payload);
             return unwrapResponse<Group>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -118,7 +96,7 @@ class ManagementService {
             );
             return unwrapResponse<Group>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -126,7 +104,7 @@ class ManagementService {
         try {
             await api.delete(`${API_URL}/groups/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -222,7 +200,7 @@ class ManagementService {
             });
             return unwrapResponse<Enrollment>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 }
