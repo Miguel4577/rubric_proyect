@@ -118,7 +118,7 @@ class AcademicService {
             const response = await api.get<ApiResponse<Subject>>(`${API_URL}/subjects/${id}`);
             return unwrapResponse<Subject>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -127,7 +127,7 @@ class AcademicService {
             const response = await api.post<ApiResponse<Subject>>(`${API_URL}/subjects`, payload);
             return unwrapResponse<Subject>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -136,7 +136,7 @@ class AcademicService {
             const response = await api.put<ApiResponse<Subject>>(`${API_URL}/subjects/${id}`, payload);
             return unwrapResponse<Subject>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -147,7 +147,7 @@ class AcademicService {
             });
             return unwrapResponse<Subject>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -158,7 +158,7 @@ class AcademicService {
             });
             return unwrapResponse<Subject>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -168,7 +168,7 @@ class AcademicService {
             const allPlans = unwrapResponse<StudyPlanVersion[]>(response.data);
             return allPlans.filter((plan) => plan.career_id === careerId);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -177,7 +177,7 @@ class AcademicService {
             const response = await api.post<ApiResponse<StudyPlanVersion>>(`${API_URL}/study-plans`, payload);
             return unwrapResponse<StudyPlanVersion>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -186,7 +186,7 @@ class AcademicService {
             const response = await api.post<ApiResponse<StudyPlanVersion>>(`${API_URL}/study-plans`, payload);
             return unwrapResponse<StudyPlanVersion>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -196,7 +196,7 @@ class AcademicService {
             const allPlans = unwrapResponse<StudyPlanVersion[]>(response.data);
             return allPlans.filter((plan) => plan.career_id === careerId);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -204,7 +204,7 @@ class AcademicService {
         try {
             await api.delete(`${API_URL}/study-plans/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -213,7 +213,7 @@ class AcademicService {
             const response = await api.get<ApiResponse<Rubric[]>>(`${EVALUATION_API_URL}/rubrics`);
             return unwrapResponse<Rubric[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -222,7 +222,7 @@ class AcademicService {
             const response = await api.post<ApiResponse<Rubric>>(`${EVALUATION_API_URL}/rubrics`, payload);
             return unwrapResponse<Rubric>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -231,7 +231,7 @@ class AcademicService {
             const response = await api.post<ApiResponse<Criterion>>(`${EVALUATION_API_URL}/criteria`, payload);
             return unwrapResponse<Criterion>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -240,7 +240,7 @@ class AcademicService {
             const response = await api.post<ApiResponse<Scale>>(`${EVALUATION_API_URL}/scales`, payload);
             return unwrapResponse<Scale>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -249,7 +249,7 @@ class AcademicService {
             const response = await api.patch<ApiResponse<Rubric>>(`${EVALUATION_API_URL}/rubrics/${rubricId}/publish`);
             return unwrapResponse<Rubric>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 }

@@ -16,7 +16,7 @@ import {
     FinalScoreRecord,
 } from "../models/Academic";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = "/evaluation";
 
 class EvaluationService {
     // ===== Rubric Methods =====
@@ -61,7 +61,7 @@ class EvaluationService {
             const response = await api.patch<ApiResponse<Rubric>>(`${API_URL}/rubrics/${id}/publish`);
             return unwrapResponse<Rubric>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -69,7 +69,7 @@ class EvaluationService {
         try {
             await api.delete(`${API_URL}/rubrics/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -81,7 +81,7 @@ class EvaluationService {
             );
             return unwrapResponse<Criterion[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -90,7 +90,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Criterion>>(`${API_URL}/criteria/${id}`);
             return unwrapResponse<Criterion>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -99,7 +99,7 @@ class EvaluationService {
             const response = await api.post<ApiResponse<Criterion>>(`${API_URL}/criteria`, payload);
             return unwrapResponse<Criterion>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -108,7 +108,7 @@ class EvaluationService {
             const response = await api.put<ApiResponse<Criterion>>(`${API_URL}/criteria/${id}`, payload);
             return unwrapResponse<Criterion>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -116,7 +116,7 @@ class EvaluationService {
         try {
             await api.delete(`${API_URL}/criteria/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -128,7 +128,7 @@ class EvaluationService {
             );
             return unwrapResponse<Scale[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -137,7 +137,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Scale>>(`${API_URL}/scales/${id}`);
             return unwrapResponse<Scale>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -146,7 +146,7 @@ class EvaluationService {
             const response = await api.post<ApiResponse<Scale>>(`${API_URL}/scales`, payload);
             return unwrapResponse<Scale>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -155,7 +155,7 @@ class EvaluationService {
             const response = await api.put<ApiResponse<Scale>>(`${API_URL}/scales/${id}`, payload);
             return unwrapResponse<Scale>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -163,7 +163,7 @@ class EvaluationService {
         try {
             await api.delete(`${API_URL}/scales/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -173,7 +173,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Evaluation[]>>(`${API_URL}/evaluations`);
             return unwrapResponse<Evaluation[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -182,7 +182,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Evaluation>>(`${API_URL}/evaluations/${id}`);
             return unwrapResponse<Evaluation>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -191,7 +191,7 @@ class EvaluationService {
             const response = await api.post<ApiResponse<Evaluation>>(`${API_URL}/evaluations`, payload);
             return unwrapResponse<Evaluation>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -200,7 +200,7 @@ class EvaluationService {
             const response = await api.put<ApiResponse<Evaluation>>(`${API_URL}/evaluations/${id}`, payload);
             return unwrapResponse<Evaluation>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -211,7 +211,7 @@ class EvaluationService {
             );
             return unwrapResponse<Evaluation>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -219,7 +219,7 @@ class EvaluationService {
         try {
             await api.delete(`${API_URL}/evaluations/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -229,7 +229,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Grade[]>>(`${API_URL}/grades`);
             return unwrapResponse<Grade[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -238,7 +238,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<Grade>>(`${API_URL}/grades/${id}`);
             return unwrapResponse<Grade>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -247,7 +247,7 @@ class EvaluationService {
             const response = await api.post<ApiResponse<Grade>>(`${API_URL}/grades`, payload);
             return unwrapResponse<Grade>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -256,7 +256,7 @@ class EvaluationService {
             const response = await api.post<ApiResponse<Grade>>(`${API_URL}/grades`, payload);
             return unwrapResponse<Grade>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -265,7 +265,7 @@ class EvaluationService {
             const response = await api.put<ApiResponse<Grade>>(`${API_URL}/grades/${id}`, payload);
             return unwrapResponse<Grade>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -276,7 +276,7 @@ class EvaluationService {
             );
             return unwrapResponse<FinalScoreRecord[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -286,7 +286,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<GradeDetail[]>>(`${API_URL}/grade-details`);
             return unwrapResponse<GradeDetail[]>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -295,7 +295,7 @@ class EvaluationService {
             const response = await api.get<ApiResponse<GradeDetail>>(`${API_URL}/grade-details/${id}`);
             return unwrapResponse<GradeDetail>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -307,7 +307,7 @@ class EvaluationService {
             );
             return unwrapResponse<GradeDetail>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -319,7 +319,7 @@ class EvaluationService {
             );
             return unwrapResponse<GradeDetail>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 
@@ -327,7 +327,7 @@ class EvaluationService {
         try {
             await api.delete(`${API_URL}/grade-details/${id}`);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 }

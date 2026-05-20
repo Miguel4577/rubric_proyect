@@ -84,7 +84,6 @@ export interface StudyPlanVersionPayload {
 
 export interface Rubric {
     id?: string;
-    subject_id: string;
     title: string;
     description?: string;
     is_public?: boolean;
@@ -94,7 +93,6 @@ export interface Rubric {
 }
 
 export interface RubricPayload {
-    subject_id: string;
     title: string;
     description?: string;
     is_public?: boolean;

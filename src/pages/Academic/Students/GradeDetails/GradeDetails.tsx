@@ -267,8 +267,8 @@ const GradeDetails = () => {
       return;
     }
 
-    if (!selectedEvaluationId || !availableEvaluations.some((row) => row.evaluation.id === selectedEvaluationId)) {
-      setSelectedEvaluationId(availableEvaluations[0].evaluation.id || '');
+    if (!selectedEvaluationId || !availableEvaluations.some((evaluation) => evaluation.id === selectedEvaluationId)) {
+      setSelectedEvaluationId(availableEvaluations[0].id || '');
     }
   }, [availableEvaluations, selectedEvaluationId]);
 

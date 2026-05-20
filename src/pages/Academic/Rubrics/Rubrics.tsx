@@ -74,7 +74,6 @@ const Rubrics = () => {
     setIsSaving(true);
     try {
       const rubric = await academicService.createRubric({
-        subject_id: draft.subjectId,
         title: draft.name,
         description: draft.description,
         is_public: false,

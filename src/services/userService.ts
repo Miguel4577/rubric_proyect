@@ -78,7 +78,7 @@ class UserService {
             const response = await api.put<ApiResponse<User>>(`${API_URL}${id}`, { is_active: false });
             return unwrapResponse<User>(response.data);
         } catch (error) {
-            throw new Error(getErrorMessage(error));
+            throw new Error(getApiErrorMessage(error));
         }
     }
 

@@ -201,7 +201,6 @@ const Scales = () => {
     setIsSaving(true);
     try {
       const rubric = await academicService.createRubric({
-        subject_id: draft.subjectId,
         title: draft.rubricName,
         description: `Criterios y niveles definidos desde HU-09${draft.rubricId ? ` (${draft.rubricId})` : ''}`,
         is_public: false,

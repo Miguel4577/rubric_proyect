@@ -40,7 +40,7 @@ class SecurityService extends EventTarget {
             return `${apiUrl.replace(/\/+$/, "")}/auth`;
         }
 
-        return "/api/auth";
+        return "http://127.0.0.1:5000/api/auth";
     }
 
     private loadStoredUser(): User | null {
